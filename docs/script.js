@@ -79,11 +79,7 @@ const init = () => {
     after.span.className = hiMap[after.link] || 'line';
   }
   dest.replaceChild(fragment, dest.firstChild);
-  for (let c of ['n0', 'n4', 'b4', 'g4', 'y4', 'r4']) {
-    const ci = document.getElementById('ci_' + c);
-    const value = colorsGui[c];
-    ci.value = value;
-  }
+  refreshColorInputs();
 };
 
 // Apply color
@@ -125,11 +121,16 @@ const applyColor = (opt = {}) => {
 };
 
 // Color-buttons
-const applyOneColor = (colorName, value) => {
-  const ci = document.getElementById('ci_' + colorName);
-  if (ci && ci.value !== value) {
-    ci.value = value;
+const refreshColorInputs = () => {
+  for (let c of ['n0', 'n4', 'b4', 'g4', 'y4', 'r4']) {
+    const value = colorsGui[c];
+    const ci = document.getElementById('ci_' + c);
+    if (ci && ci.value !== value) {
+      ci.value = value;
+    }
   }
+};
+const applyOneColor = (colorName, value) => {
   const c = colorName[0];
   if (colorName[1] === '4') {
     if (c !== 'n') {
@@ -239,6 +240,7 @@ document.getElementById('file_pic').addEventListener('input', e => {
       applyOneColor('g4', rgbToHex(picks[n(2, 4)]));
       applyOneColor('y4', rgbToHex(picks[n(1, 4)]));
       applyOneColor('r4', rgbToHex(picks[0]));
+      refreshColorInputs();
       applyColor();
     };
     img.src = e2.target.result;
@@ -279,6 +281,7 @@ const loadFromQuery = (q) => {
       colorsGui[key] = "#" + value;
     }
   }
+  refreshColorInputs();
   applyColor({ keepUrl: 1 });
 };
 document.getElementById('permalink').addEventListener('click', e => {
