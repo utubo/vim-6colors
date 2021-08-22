@@ -223,9 +223,9 @@ exe 'hi SpellRare'     s:fg s:b3 s:bg s:n0
 
 " you can do it
 
-"---------------------
-"- Specific settings -
-"---------------------
+"-----------
+"- Plugins -
+"-----------
 exe 'hi EasyMotionShadeDefault' s:fg s:n2 s:bg s:n0
 exe 'hi EasyMotionTarget' s:fg s:b4 s:bg s:n0
 exe 'hi EasyMotionTarget2First' s:fg s:g4 s:bg s:n0
