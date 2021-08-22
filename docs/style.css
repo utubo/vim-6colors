@@ -11,6 +11,11 @@
 	white-space: pre;
 }
 
+.bold { font-weight: bold; }
+.italic { font-style: italic; }
+.underline { text-decoration: underline; }
+.undercurl { text-decoration: underline wavy; }
+
 .color-thumb {
 	border: 1px solid #9999;
 	content: '';

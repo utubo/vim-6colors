@@ -35,6 +35,12 @@ const init = () => {
       if (line.includes('s:italic')) {
         className += ' italic';
       }
+      if (line.includes('underline')) {
+        className += ' underline';
+      }
+      if (line.includes('undercurl')) {
+        className += ' undercurl';
+      }
     } else if (linkReg.test(line)) {
       hiName = RegExp.$1;
       className = hiMap[RegExp.$2];
