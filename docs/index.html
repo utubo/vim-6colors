@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>vim-6Colors</title>
+		<style>.dummy { color: #fff; }</style>
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<div class="header">
+			<label class="color-button fg-n4 bg-n0" for="ci_n0" id="cb_n0">BG</label>
+			<label class="color-button fg-n0 bg-n4" for="ci_n4" id="cb_n4">FG</label>
+			<label class="color-button fg-n0 bg-b4" for="ci_b4">B</label>
+			<label class="color-button fg-n0 bg-g4" for="ci_g4">G</label>
+			<label class="color-button fg-n0 bg-y4" for="ci_y4">Y</label>
+			<label class="color-button fg-n0 bg-r4" for="ci_r4">R</label>
+			<label class="button" for="cb_background">🌓</label>
+			<span class="button" id="download">💾</span>
+			<label class="button" for="file_pic">🧪</label>
+		</div>
+		<div id="dest" class="dest fg-n3 bg-n0">
+			<span></span>
+		</div>
+		<div class="hidden">
+			<input id="ci_n0" type="color" class="color-input">
+			<input id="ci_n4" type="color" class="color-input">
+			<input id="ci_b4" type="color" class="color-input">
+			<input id="ci_g4" type="color" class="color-input">
+			<input id="ci_y4" type="color" class="color-input">
+			<input id="ci_r4" type="color" class="color-input">
+			<input id="cb_background" type="checkbox" class='hidden'>
+			<input id="file_pic" type="file" accept="image/png, image/jpeg">
+			<canvas id="work_canvas" width="25" height="25"></canvas>
+			<a id="downloadLink" href="#" download="mycolor.vim"></a>
+		</div>
+		<script src="default_color.js"></script>
+		<script src="rgb2term.js"></script>
+		<script src="script.js"></script>
+	</body>
+</html>

@@ -1,0 +1,54 @@
+.dest {
+	border-radius: .25rem;
+	padding: .5rem;
+}
+
+.line {
+	display: block;
+	font-family: monospace;
+	min-height: 1rem;
+	position: relative;
+	white-space: pre;
+}
+
+.color-thumb {
+	border: 1px solid #9999;
+	content: '';
+	display: inline-block;
+	height: .8rem;
+	margin-left: .5rem;
+	width: .8rem;
+}
+
+.header {
+	background: #9999;
+	border-radius: .25rem;
+	margin: 0 1rem 1rem 1rem;
+	padding: .5rem 1rem;
+	position: sticky;
+	text-align: center;
+	top: 1rem;
+	z-index: 1;
+}
+
+.color-button {
+	border: 1pt solid;
+	border-radius: 50%;
+	cursor: pointer;
+	display: inline-block;
+	font-size: .8rem;
+	height: 2rem;
+	line-height: 2rem;
+	margin: .1rem;
+	text-align: center;
+	width: 2rem;
+}
+
+.button {
+	cursor: pointer;
+	line-height: 2rem;
+}
+
+.hidden {
+	display: none;
+}
