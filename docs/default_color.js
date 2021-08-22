@@ -3,7 +3,7 @@ const DEFAULT=`" * the name of colorscheme here *
 " GitHub: ***
 " Notes:
 " Thx: This is based on https://github.com/ggalindezb/vim_colorscheme_template
-"
+
 highlight clear
 if exists('syntax_on')
   syntax reset
@@ -22,7 +22,7 @@ let s:background = &background
 "   r: error(red)
 " opacity:
 "   0: 0% Default BG (only n0)
-"   1: 30% BG
+"   1: 20% BG
 "   2: 60% Middle FG
 "   3: 80% Default FG
 "   4: 100% Highlight (eg. b4=cursor,g4=search)
@@ -168,7 +168,7 @@ hi! link SpecialKey NonText
 exe 'hi Function'      s:fg s:b2
 exe 'hi Identifier '   s:fg s:n3
 exe 'hi Constant'      s:fg s:b2
-exe 'hi String'        s:fg s:b3 s:bg s:b1
+exe 'hi String'        s:fg s:b3 s:bg s:n1
 exe 'hi Character'     s:fg s:b2
 exe 'hi Number'        s:fg s:b2
 hi! link Boolean Number

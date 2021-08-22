@@ -126,7 +126,7 @@ const applyOneColor = (colorName, value) => {
     }
     const c4RGB = hexToRGB(value);
     const n0RGB = hexToRGB(colorsGui.n0);
-    const opacities = [0, 0.3, 0.6, 0.8, 1];
+    const opacities = [0, 0.2, 0.6, 0.8, 1];
     for (let i = 0; i < 5; i++) {
       let rgb = '#';
       const opacity = opacities[i];
