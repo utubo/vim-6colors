@@ -178,10 +178,14 @@ addEventListener('input', e=> {
   }
 });
 
-// Tool buttons
+// ----------------
+// - Tool buttons -
+// ----------------
+// Background
 cbBackground.checked = false;
 cbBackground.addEventListener('click', applyColor);
 
+// Sampling
 document.getElementById('file_pic').addEventListener('input', e => {
   let r = new FileReader();
   r.onload = e2 => {
@@ -238,6 +242,7 @@ document.getElementById('file_pic').addEventListener('input', e => {
   r.readAsDataURL(e.target.files[0]);
 });
 
+// Download
 document.getElementById('download').addEventListener('click', e=> {
   const link = document.getElementById('downloadLink');
   const lines = [];
@@ -248,6 +253,38 @@ document.getElementById('download').addEventListener('click', e=> {
   link.click();
 });
 
+// Permalink
+const MAX_LENGTH = 2000;
+const createLink = () => {
+  const kv = [];
+  for (let [key, value] of Object.entries(colorsGui)) {
+    kv.push(`${key}-${value.slice(1)}`);
+  }
+  for (let [key, value] of Object.entries(colorsCterm)) {
+    kv.push(`${key}-${value}`);
+  }
+  return CCCompress(kv.join("_"), MAX_LENGTH);
+};
+const loadFromQuery = (q) => {
+  q = CCDecompress(q, MAX_LENGTH);
+  for (let kv of q.split("_")) {
+    const [key, value] = kv.split("-");
+    if (value.length !== 6) {
+      colorsCterm[key] = value | 0;
+    } else {
+      colorsGui[key] = "#" + value;
+    }
+  }
+  applyColor();
+};
+document.getElementById('permalink').addEventListener('click', e => {
+  e.target.href = '?c=' + createLink();
+});
+
 init();
-applyColor();
+if (location.search.match(/c=([^&]+)/)) {
+  loadFromQuery(RegExp.$1);
+} else {
+  applyColor();
+}
 

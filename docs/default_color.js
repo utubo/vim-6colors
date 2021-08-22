@@ -223,11 +223,9 @@ exe 'hi SpellCap'      s:fg s:y3 s:bg s:n0 s:style 'undercurl'
 exe 'hi SpellLocal'    s:fg s:g3 s:bg s:n0
 exe 'hi SpellRare'     s:fg s:b3 s:bg s:n0
 
-" you can do it
-
-"-----------
-"- Plugins -
-"-----------
+" ---------------------
+" - Specific settings -
+" ---------------------
 exe 'hi EasyMotionShadeDefault' s:fg s:n2 s:bg s:n0
 exe 'hi EasyMotionTarget' s:fg s:b4 s:bg s:n0
 exe 'hi EasyMotionTarget2First' s:fg s:g4 s:bg s:n0
