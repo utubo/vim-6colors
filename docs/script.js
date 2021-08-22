@@ -15,6 +15,7 @@ const init = () => {
   const hiReg = /exe 'hi (\S+)'/;
   const linkReg = /hi! link (\S+) (\S+)/;
   const hiMap = {};
+  const afterLink = [];
   let isGui = true;
   for (let line of DEFAULT.split('\n')) {
     const span = document.createElement('SPAN');
@@ -44,6 +45,9 @@ const init = () => {
     } else if (linkReg.test(line)) {
       hiName = RegExp.$1;
       className = hiMap[RegExp.$2];
+      if (!className) {
+        afterLink.push({ span: span, link: RegExp.$2 });
+      }
     } else if (isGui && line.includes("let s:term = 'cterm'")) {
       isGui = false;
     } else if (letColorReg.test(line)) {
@@ -69,6 +73,9 @@ const init = () => {
       hiMap[hiName] = className;
     }
     fragment.appendChild(span);
+  }
+  for (let after of afterLink) {
+    after.span.className = hiMap[after.link] || 'line';
   }
   dest.replaceChild(fragment, dest.firstChild);
   for (let c of ['n0', 'n4', 'b4', 'g4', 'y4', 'r4']) {
