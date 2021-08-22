@@ -100,6 +100,9 @@ let s:none   = s:style.'NONE'
 let s:bold   = s:style.'bold'
 let s:italic = s:style.'italic'
 
+" --------
+" - Base -
+" --------
 exe 'hi Normal'        s:fg s:n3 s:bg s:n0
 exe 'hi Cursor'        s:fg s:n4 s:bg s:b4
 exe 'hi CursorIM'      s:fg s:n4 s:bg s:y4
@@ -158,9 +161,9 @@ exe 'hi WarningMsg'    s:fg s:y3
 hi! link Ignore NonText
 hi! link SpecialKey NonText
 
-" --------------------------------
-" Variable types
-" --------------------------------
+" ------------------
+" - Variable types -
+" ------------------
 exe 'hi Function'      s:fg s:b2
 exe 'hi Identifier '   s:fg s:n3
 exe 'hi Constant'      s:fg s:b2
@@ -170,9 +173,9 @@ exe 'hi Number'        s:fg s:b2
 hi! link Boolean Number
 hi! link Float Number
 
-" --------------------------------
-" Language constructs
-" --------------------------------
+" -----------------------
+" - Language constructs -
+" -----------------------
 exe 'hi Statement'     s:fg s:b3
 exe 'hi Conditional'   s:fg s:b3
 exe 'hi Repeat'        s:fg s:b3
@@ -194,25 +197,25 @@ hi! link Special Statement
 exe 'hi PreProc' s:fg s:b3
 
 
-" --------------------------------
-" Diff
-" --------------------------------
+" --------
+" - Diff -
+" --------
 exe 'hi DiffAdd'       s:fg s:b1 s:bg s:b3
 exe 'hi DiffChange'    s:fg s:y1 s:bg s:y3
 exe 'hi DiffDelete'    s:fg s:r2 s:bg s:r3
 exe 'hi DiffText'      s:fg s:g1 s:bg s:g3 s:none
 
-" --------------------------------
-" Completion menu
-" --------------------------------
+" -------------------
+" - Completion menu -
+" -------------------
 exe 'hi Pmenu'         s:fg s:n1 s:bg s:b2
 hi! link PmenuSel Cursor
 exe 'hi PmenuSbar'     s:bg s:b1
 exe 'hi PmenuThumb'    s:bg s:b3
 
-" --------------------------------
-" Spelling
-" --------------------------------
+" ------------
+" - Spelling -
+" ------------
 exe 'hi SpellBad'      s:fg s:r3 s:bg s:r1 s:style 'undercurl'
 exe 'hi SpellCap'      s:fg s:y3 s:bg s:n0 s:style 'undercurl'
 exe 'hi SpellLocal'    s:fg s:g3 s:bg s:n0
@@ -220,9 +223,9 @@ exe 'hi SpellRare'     s:fg s:b3 s:bg s:n0
 
 " you can do it
 
-"-------------------------------------------------
-" Specific settings
-"-------------------------------------------------
+"---------------------
+"- Specific settings -
+"---------------------
 exe 'hi EasyMotionShadeDefault' s:fg s:n2 s:bg s:n0
 exe 'hi EasyMotionTarget' s:fg s:b4 s:bg s:n0
 exe 'hi EasyMotionTarget2First' s:fg s:g4 s:bg s:n0
