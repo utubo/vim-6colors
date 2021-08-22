@@ -22,7 +22,7 @@ let s:background = &background
 "   r: error(red)
 " opacity:
 "   0: 0% Default BG (only n0)
-"   1: 40% BG
+"   1: 30% BG
 "   2: 60% Middle FG
 "   3: 80% Default FG
 "   4: 100% Highlight (eg. b4=cursor,g4=search)
@@ -144,6 +144,7 @@ exe 'hi Question'      s:fg s:y4 s:bg s:n0 s:none
 exe 'hi Title'         s:fg s:b3 s:bg s:n0 s:bold
 exe 'hi ModeMsg'       s:fg s:n3 s:bg s:n0 s:none
 exe 'hi MoreMsg'       s:fg s:n2 s:bg s:n0 s:none
+hi! link WildMenu Visual
 
 " --------------
 " - Visual aid -
@@ -167,7 +168,7 @@ hi! link SpecialKey NonText
 exe 'hi Function'      s:fg s:b2
 exe 'hi Identifier '   s:fg s:n3
 exe 'hi Constant'      s:fg s:b2
-exe "hi String"        s:fg s:b2 s:bg s:b1
+exe 'hi String'        s:fg s:b3 s:bg s:b1
 exe 'hi Character'     s:fg s:b2
 exe 'hi Number'        s:fg s:b2
 hi! link Boolean Number
@@ -186,6 +187,7 @@ exe 'hi Comment'       s:fg s:g2
 exe 'hi SpecialComment' s:fg s:g2 s:italic
 exe 'hi SpecialChar'   s:fg s:b3
 exe 'hi Tag'           s:fg s:g3
+exe 'hi Type'          s:fg s:g4
 exe 'hi Delimiter'     s:fg s:y4
 exe 'hi Debug'         s:fg s:n2
 hi! link Operator Normal
