@@ -1,4 +1,4 @@
-const DEFAULT=`" *colorschme-name-here*
+const DEFAULT=`" * the name of colorscheme here *
 " Author: ***
 " GitHub: ***
 " Notes:
@@ -21,10 +21,10 @@ let s:background = &background
 "   y: warn(yellow)
 "   r: error(red)
 " opacity:
-"   0: 0% default bg (only n0)
-"   1: 40% bg
-"   2: 60% middle fg
-"   3: 80% default fg
+"   0: 0% Default BG (only n0)
+"   1: 40% BG
+"   2: 60% Middle FG
+"   3: 80% Default FG
 "   4: 100% Highlight (eg. b4=cursor,g4=search)
 "   9: 100% Highlight on &background == 'light'
 if has('gui_running')
