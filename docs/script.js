@@ -1,3 +1,4 @@
+const BASE_URL = location.href.replace(/\?.*/, "");
 const styleSheet = document.styleSheets[0];
 const dest = document.getElementById('dest');
 const cbBackground = document.getElementById('cb_background');
@@ -94,7 +95,7 @@ const lightColors = {
   y1: 'y3', y3:'y1', y4: 'y9',
   r1: 'r3', r3:'r1', r4: 'r9',
 };
-const applyColor = () => {
+const applyColor = (opt = {}) => {
   for (let i = styleSheet.cssRules.length - 1; 0 <= i; i --) {
     styleSheet.deleteRule(i);
   }
@@ -118,6 +119,9 @@ const applyColor = () => {
   }
   cbN0.setAttribute('for', cbBackground.checked ? 'ci_n4' : 'ci_n0');
   cbN4.setAttribute('for', cbBackground.checked ? 'ci_n0' : 'ci_n4');
+  if (!opt.keepUrl) {
+    history.replaceState("", "", BASE_URL);
+  }
 };
 
 // Color-buttons
@@ -275,7 +279,7 @@ const loadFromQuery = (q) => {
       colorsGui[key] = "#" + value;
     }
   }
-  applyColor();
+  applyColor({ keepUrl: 1 });
 };
 document.getElementById('permalink').addEventListener('click', e => {
   e.target.href = '?c=' + createLink();
