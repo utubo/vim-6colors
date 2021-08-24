@@ -293,9 +293,9 @@ const loadFromQuery = (q) => {
   q = CCDecompress(q, MAX_LENGTH);
   for (let kv of q.split("_")) {
     const [key, value] = kv.split("-");
-    if (value.length !== 6) {
+    if (value.length <= 3) {
       colorsCterm[key] = value | 0;
-    } else {
+    } else if (value.length === 6){
       colorsGui[key] = "#" + value;
     }
   }
