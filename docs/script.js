@@ -6,7 +6,7 @@ const cbN0 = document.getElementById('cb_n0');
 const cbN4 = document.getElementById('cb_n4');
 
 let colorSchemeName = '';
-let author = ''
+let author = '';
 const colorsGui = {};
 const colorsCterm = {};
 
@@ -198,8 +198,6 @@ document.getElementById('file_pic').addEventListener('input', e => {
   r.onload = e2 => {
     let img = new Image();
     img.onload = e3 => {
-      const w = e3.target.width;
-      const h = e3.target.height;
       const canvas = document.getElementById('work_canvas');
       const ctx = canvas.getContext('2d');
       ctx.drawImage(e3.target, 0, 0, canvas.width, canvas.height);
