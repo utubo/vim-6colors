@@ -5,6 +5,8 @@ const cbBackground = document.getElementById('cb_background');
 const cbN0 = document.getElementById('cb_n0');
 const cbN4 = document.getElementById('cb_n4');
 
+let colorSchemeName = '';
+let author = ''
 const colorsGui = {};
 const colorsCterm = {};
 
@@ -248,15 +250,33 @@ document.getElementById('file_pic').addEventListener('input', e => {
   r.readAsDataURL(e.target.files[0]);
 });
 
+// Name
+const applyTextInfo = () => {
+  const lines = document.getElementsByClassName('line');
+  lines[0].textContent = `" * ${colorSchemeName || 'the color scheme name here'} *`;
+  lines[1].textContent = `" Author: ${author || '***'}`;
+};
+document.getElementById('btn_name').addEventListener('click', e=> {
+  colorSchemeName = prompt('Input the color scheme name.', colorSchemeName) || '';
+  applyTextInfo();
+});
+
+// Author
+document.getElementById('btn_author').addEventListener('click', e=> {
+  author = prompt('Input your name. (Author)', author) || '';
+  applyTextInfo();
+});
+
 // Download
-document.getElementById('download').addEventListener('click', e=> {
-  const link = document.getElementById('downloadLink');
+document.getElementById('btn_download').addEventListener('click', e=> {
+  const lnDownload = document.getElementById('ln_download');
   const lines = [];
   for (let line of dest.getElementsByClassName('line')) {
     lines.push(line.textContent);
   }
-  link.href = 'data:text/plain;charset=utf8,' + encodeURIComponent(lines.join('\n'));
-  link.click();
+  lnDownload.download = `${colorSchemeName || 'mycolor'}.vim`;
+  lnDownload.href = 'data:text/plain;charset=utf8,' + encodeURIComponent(lines.join('\n'));
+  lnDownload.click();
 });
 
 // Permalink
@@ -284,11 +304,25 @@ const loadFromQuery = (q) => {
   refreshColorInputs();
   applyColor({ keepUrl: 1 });
 };
-document.getElementById('permalink').addEventListener('click', e => {
-  e.target.href = '?c=' + createLink();
+document.getElementById('btn_permalink').addEventListener('click', e => {
+  let href = '?c=' + createLink();
+  if (colorSchemeName) {
+    href += `&n=${encodeURI(colorSchemeName)}`;
+  }
+  if (author) {
+    href += `&a=${encodeURI(author)}`;
+  }
+  e.target.href = href;
 });
 
 init();
+if (location.search.match(/n=([^&]+)/)) {
+  colorSchemeName = decodeURI(RegExp.$1).slice(0, 255);
+}
+if (location.search.match(/a=([^&]+)/)) {
+  author = decodeURI(RegExp.$1).slice(0, 255);
+}
+applyTextInfo();
 if (location.search.match(/c=([^&]+)/)) {
   loadFromQuery(RegExp.$1);
 } else {

@@ -1,6 +1,5 @@
-const DEFAULT=`" * the name of colorscheme here *
+const DEFAULT=`" * the color scheme name here *
 " Author: ***
-" GitHub: ***
 " Notes:
 " Thx: This is based on https://github.com/ggalindezb/vim_colorscheme_template
 
