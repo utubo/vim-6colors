@@ -295,7 +295,7 @@ const loadFromQuery = (q) => {
     const [key, value] = kv.split("-");
     if (value.length <= 3) {
       colorsCterm[key] = value | 0;
-    } else if (value.length === 6){
+    } else if (value.length === 6) {
       colorsGui[key] = "#" + value;
     }
   }
