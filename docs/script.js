@@ -84,7 +84,7 @@ const init = () => {
   refreshColorInputs();
 };
 
-// Apply color
+// Apply colors
 const quoteReg = /'([^']+)'/;
 const lightColors = {
   n0: 'n4', n1: 'n3', n3:'n1', n4: 'n0',
@@ -93,7 +93,7 @@ const lightColors = {
   y1: 'y3', y3:'y1', y4: 'y9',
   r1: 'r3', r3:'r1', r4: 'r9',
 };
-const applyColor = (opt = {}) => {
+const applyColors = async (opt = {}) => {
   for (let i = styleSheet.cssRules.length - 1; 0 <= i; i --) {
     styleSheet.deleteRule(i);
   }
@@ -168,7 +168,7 @@ const onInputColorLazy = () => {
   if (colorsGui[colorName] === value) return;
   colorsGui[colorName] = value;
   applyOneColor(colorName, value);
-  applyColor();
+  applyColors();
 };
 let onInputColorTimer;
 let onInputColorTarget;
@@ -190,14 +190,14 @@ addEventListener('input', e=> {
 // ----------------
 // Background
 cbBackground.checked = false;
-cbBackground.addEventListener('click', applyColor);
+cbBackground.addEventListener('click', applyColors);
 
 // Sampling
 document.getElementById('file_pic').addEventListener('input', e => {
   let r = new FileReader();
   r.onload = e2 => {
     let img = new Image();
-    img.onload = e3 => {
+    img.onload = async e3 => {
       const canvas = document.getElementById('work_canvas');
       const ctx = canvas.getContext('2d');
       ctx.drawImage(e3.target, 0, 0, canvas.width, canvas.height);
@@ -241,7 +241,7 @@ document.getElementById('file_pic').addEventListener('input', e => {
       applyOneColor('y4', rgbToHex(picks[n(1, 4)]));
       applyOneColor('r4', rgbToHex(picks[0]));
       refreshColorInputs();
-      applyColor();
+      applyColors();
     };
     img.src = e2.target.result;
   };
@@ -300,7 +300,7 @@ const loadFromQuery = (q) => {
     }
   }
   refreshColorInputs();
-  applyColor({ keepUrl: 1 });
+  applyColors({ keepUrl: 1 });
 };
 document.getElementById('btn_permalink').addEventListener('click', e => {
   let href = '?c=' + createLink();
@@ -324,6 +324,6 @@ applyTextInfo();
 if (location.search.match(/c=([^&]+)/)) {
   loadFromQuery(RegExp.$1);
 } else {
-  applyColor();
+  applyColors();
 }
 
