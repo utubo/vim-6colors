@@ -1,4 +1,4 @@
-const BASE_URL = location.href.replace(/\?.*/, "");
+const BASE_URL = location.href.replace(/\?.*/, '');
 const styleSheet = document.styleSheets[0];
 const dest = document.getElementById('dest');
 const cbBackground = document.getElementById('cb_background');
@@ -85,13 +85,13 @@ const init = () => {
 };
 
 // Apply colors
-const quoteReg = /'([^']+)'/;
+const quoteReg = /'[^']+'/;
 const lightColors = {
-  n0: 'n4', n1: 'n3', n3:'n1', n4: 'n0',
-  b1: 'b3', b3:'b1', b4: 'b9',
-  g1: 'g3', g3:'g1', g4: 'g9',
-  y1: 'y3', y3:'y1', y4: 'y9',
-  r1: 'r3', r3:'r1', r4: 'r9',
+  n0: 'n4', n1: 'n3', n3: 'n1', n4: 'n0',
+  b1: 'b3', b3: 'b1', b4: 'b9',
+  g1: 'g3', g3: 'g1', g4: 'g9',
+  y1: 'y3', y3: 'y1', y4: 'y9',
+  r1: 'r3', r3: 'r1', r4: 'r9',
 };
 const applyColors = async (opt = {}) => {
   for (let i = styleSheet.cssRules.length - 1; 0 <= i; i --) {
@@ -118,7 +118,7 @@ const applyColors = async (opt = {}) => {
   cbN0.setAttribute('for', cbBackground.checked ? 'ci_n4' : 'ci_n0');
   cbN4.setAttribute('for', cbBackground.checked ? 'ci_n0' : 'ci_n4');
   if (!opt.keepUrl) {
-    history.replaceState("", "", BASE_URL);
+    history.replaceState('', '', BASE_URL);
   }
 };
 
@@ -194,22 +194,20 @@ cbBackground.addEventListener('click', applyColors);
 
 // Sampling
 document.getElementById('file_pic').addEventListener('input', e => {
-  let r = new FileReader();
+  const r = new FileReader();
   r.onload = e2 => {
-    let img = new Image();
+    const img = new Image();
     img.onload = async e3 => {
       const canvas = document.getElementById('work_canvas');
       const ctx = canvas.getContext('2d');
       ctx.drawImage(e3.target, 0, 0, canvas.width, canvas.height);
       let picks = [];
-      for (let x = 0; x < canvas.width; x ++) {
-        for (let y = 0; y < canvas.height; y ++) {
+      const w = canvas.width;
+      const h = canvas.height;
+      for (let x = 0; x < w; x ++) {
+        for (let y = 0; y < h; y ++) {
           const data = ctx.getImageData(x, y, 1, 1).data;
-          const c = {
-            r: data[0],
-            g: data[1],
-            b: data[2],
-          };
+          const c = { r: data[0], g: data[1], b: data[2] };
           if (!c.r && !c.g && !c.b) continue;
           Object.assign(c, rgbToHSL(c));
           picks.push(c);
@@ -227,8 +225,8 @@ document.getElementById('file_pic').addEventListener('input', e => {
       picks.sort((a, b) => b.l - a.l);
       const n0 = picks.slice(-1)[0];
       const n4 = picks[0];
-      applyOneColor('n0',  rgbToHex(n0));
-      applyOneColor('n4',  rgbToHex(n4));
+      applyOneColor('n0', rgbToHex(n0));
+      applyOneColor('n4', rgbToHex(n4));
       const minL = (n4.l - n0.l) * 2 / 5 + n0.l;
       const maxL = (n4.l - n0.l) * 4 / 5 + n0.l;
       picks = picks.filter(c => (minL < c.l && c.l < maxL));
@@ -287,16 +285,16 @@ const createLink = () => {
   for (let [key, value] of Object.entries(colorsCterm)) {
     kv.push(`${key}-${value}`);
   }
-  return CCCompress(kv.join("_"), MAX_LENGTH);
+  return CCCompress(kv.join('_'), MAX_LENGTH);
 };
 const loadFromQuery = (q) => {
   q = CCDecompress(q, MAX_LENGTH);
-  for (let kv of q.split("_")) {
-    const [key, value] = kv.split("-");
+  for (let kv of q.split('_')) {
+    const [key, value] = kv.split('-');
     if (value.length <= 3) {
       colorsCterm[key] = value | 0;
     } else if (value.length === 6) {
-      colorsGui[key] = "#" + value;
+      colorsGui[key] = '#' + value;
     }
   }
   refreshColorInputs();
