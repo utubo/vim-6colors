@@ -35,6 +35,7 @@
 	margin-left: .2rem;
 	opacity: 0;
 	vertical-align: top;
+	transition: opacity .1s .1s;
 }
 .line:hover .btn-auto-link-color::after {
 	opacity: .5;
