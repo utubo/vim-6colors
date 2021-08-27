@@ -234,14 +234,14 @@ document.getElementById('file_pic').addEventListener('input', async e => {
   // Remove too bright and too dark.
   const minL = (brightest.l - darkest.l) * 2 / 5 + darkest.l;
   const maxL = (brightest.l - darkest.l) * 4 / 5 + darkest.l;
-  pixels = picks.filter(c => (minL < c.l && c.l < maxL));
+  pixels = pixels.filter(c => (minL < c.l && c.l < maxL));
   // Remove gray.
   pixels.sort((a, b) => b.s - a.s);
   const minS = pixels[0].s / 4;
-  pixels = picks.filter(c => minS < c.s);
+  pixels = pixels.filter(c => minS < c.s);
   // Sort by hue.(0=red, 90=yellow, 180=green, 270=blue)
   pixels.sort((a, b) => a.h - b.h);
-  const quoter = a => pixels[Math.floor(picks.length * a / 4)];
+  const quoter = a => pixels[Math.floor(pixels.length * a / 4)];
   applyOneColor('b4', toHex(quoter(3)));
   applyOneColor('g4', toHex(quoter(2)));
   applyOneColor('y4', toHex(quoter(1)));
