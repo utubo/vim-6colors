@@ -270,7 +270,7 @@ const onClickCtermColorThumb = target => {
   targetTile && targetTile.classList.add('selected');
   // Show
   const rect = target.getBoundingClientRect();
-  ctermDlg.style.left = (rect.right + rect.width + scrollX) + 'px';
+  ctermDlg.style.left = (rect.right + scrollX) + 'px';
   ctermDlg.style.top = (rect.top + scrollY) + 'px';
   ctermDlg.classList.remove('transparent');
   ctermDlg.focus();
@@ -300,12 +300,12 @@ addEventListener('click', e=> {
   if (target.classList.contains('cterm-dlg-tile')) {
     onClickCtermDlgTile(target);
     return;
-  } else {
-    hideCtermDlg();
   }
   if (target.classList.contains('btn-auto-link-color')) {
     dest.classList.toggle('auto-link-color');
+    return;
   }
+  hideCtermDlg();
 });
 
 // ----------------
