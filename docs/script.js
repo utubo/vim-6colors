@@ -237,7 +237,7 @@ const createCtermDlg = () => {
     tile.id = 'cterm_dlg_tile_' + c.index;
     tile.className = 'cterm-dlg-tile';
     tile.title = c.index;
-    tile.style.background = toHex(c);
+    tile.style.background = c.hex;
     f.appendChild(tile);
     if (++x === 16) {
       f.appendChild(document.createElement('BR'));
@@ -280,7 +280,7 @@ const onClickCtermDlgTile = target => {
   const key = ctermDlg.getAttribute('data-target');
   colorsCterm[key] = target.title;
   if (isAutoLinkColor()) {
-    colorsGui[key] = toHex(termColors[target.title]);
+    colorsGui[key] = termColors[target.title].hex;
   }
   applyColors();
 };
