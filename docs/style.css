@@ -1,6 +1,7 @@
 .dest {
 	border-radius: .25rem;
 	padding: .5rem;
+	position: relative;
 }
 
 .line {
@@ -16,13 +17,56 @@
 .underline { text-decoration: underline; }
 .undercurl { text-decoration: underline wavy; }
 
-.color-thumb {
+.gui-color-thumb, .cterm-color-thumb, .cterm-dlg-tile {
 	border: 1px solid #9999;
 	content: '';
+	cursor: pointer;
 	display: inline-block;
 	height: .8rem;
 	margin-left: .5rem;
 	width: .8rem;
+}
+
+.btn-auto-link-color::after {
+	content: '🔗';
+	cursor: pointer;
+	display: inline;
+	font-size: .8rem;
+	margin-left: .2rem;
+	opacity: 0;
+	vertical-align: top;
+}
+.line:hover .btn-auto-link-color::after {
+	opacity: .5;
+}
+.auto-link-color .line:hover .btn-auto-link-color::after {
+	opacity: 1;
+}
+
+.cterm-dlg {
+	background: #9999;
+	border-radius: .25rem;
+	line-height: 0;
+	opacity: 1;
+	padding: .5rem;
+	position: absolute;
+	transition: .2s;
+	z-index: 2;
+}
+
+.cterm-dlg-tile {
+	border: 2px solid #0000;
+	margin: 1pt;
+}
+
+.selected {
+	border-color: #fff;
+
+}
+
+.transparent {
+	opacity: 0;
+	pointer-events: none;
 }
 
 .header {

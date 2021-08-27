@@ -2,13 +2,23 @@ const BASE_URL = location.href.replace(/\?.*/, '');
 const styleSheet = document.styleSheets[0];
 const dest = document.getElementById('dest');
 const cbBackground = document.getElementById('cb_background');
+const cbAutoLinkColor = document.getElementById('cb_auto_link_color');
 const cbN0 = document.getElementById('cb_n0');
 const cbN4 = document.getElementById('cb_n4');
+const ciThumb = document.getElementById('ci_xx');
+let ctermDlg;
 
 let colorSchemeName = '';
 let author = '';
 const colorsGui = {};
 const colorsCterm = {};
+
+const toHex = rgb => {
+  return '#' +
+    ('0' + rgb.r.toString(16)).slice(-2) +
+    ('0' + rgb.g.toString(16)).slice(-2) +
+    ('0' + rgb.b.toString(16)).slice(-2);
+};
 
 const init = () => {
   const fragment = document.createDocumentFragment();
@@ -57,15 +67,24 @@ const init = () => {
       const colorName = RegExp.$1;
       const value = RegExp.$2;
       span.id = (isGui ? 'gui_' : 'cterm_') + colorName;
-      subItem = document.createElement('SPAN');
-      subItem.className = 'color-thumb';
+      subItem = document.createDocumentFragment();
+      const thumb = document.createElement('SPAN');
+      const autoLink = document.createElement('SPAN');
+      autoLink.className = 'btn-auto-link-color';
+      thumb.setAttribute('data-target', colorName);
       if (isGui) {
         colorsGui[colorName] = value;
-        subItem.style.background = value;
+        thumb.style.background = value;
+        thumb.className += ' gui-color-thumb';
+        autoLink.title = 'Link to the cterm color';
       } else {
         colorsCterm[colorName] = value;
-        subItem.style.background = termColors[value].hex;
+        thumb.style.background = termColors[value].hex;
+        thumb.className += ' cterm-color-thumb';
+        autoLink.title = 'Link to the gui color';
       }
+      subItem.appendChild(thumb);
+      subItem.appendChild(autoCtermColor);
     }
     span.className = className;
     span.textContent = line;
@@ -107,13 +126,13 @@ const applyColors = async (opt = {}) => {
     const span = document.getElementById(`gui_${c}`);
     if (!span) continue;
     span.firstChild.nodeValue = span.textContent.replace(quoteReg, `'${value}'`);
-    span.getElementsByClassName('color-thumb')[0].style.background = value;
+    span.getElementsByClassName('gui-color-thumb')[0].style.background = value;
   }
   for (let [c, value] of Object.entries(colorsCterm)) {
     const span = document.getElementById(`cterm_${c}`);
     if (!span) continue;
     span.firstChild.nodeValue = span.textContent.replace(quoteReg, `'${value}'`);
-    span.getElementsByClassName('color-thumb')[0].style.background = termColors[value].hex;
+    span.getElementsByClassName('cterm-color-thumb')[0].style.background = termColors[value].hex;
   }
   cbN0.setAttribute('for', cbBackground.checked ? 'ci_n4' : 'ci_n0');
   cbN4.setAttribute('for', cbBackground.checked ? 'ci_n0' : 'ci_n4');
@@ -122,7 +141,9 @@ const applyColors = async (opt = {}) => {
   }
 };
 
-// Color-buttons
+// -----------------
+// - Color buttons -
+// -----------------
 const refreshColorInputs = () => {
   for (let c of ['n0', 'n4', 'b4', 'g4', 'y4', 'r4']) {
     const value = colorsGui[c];
@@ -163,11 +184,17 @@ const applyOneColor = (colorName, value) => {
   }
 };
 const onInputColorLazy = () => {
-  const colorName = onInputColorTarget.id.replace('ci_', '');
+  const key = onInputColorTarget.getAttribute('data-target');
   const value = onInputColorTarget.value;
-  if (colorsGui[colorName] === value) return;
-  colorsGui[colorName] = value;
-  applyOneColor(colorName, value);
+  if (colorsGui[key] === value) return;
+  colorsGui[key] = value;
+  if (onInputColorTarget === ciThumb) {
+    if (isAutoLinkColor()) {
+      colorsCterm[key] = findTermColor(colorsGui[key]).index;
+    }
+  } else {
+    applyOneColor(key, value);
+  }
   applyColors();
 };
 let onInputColorTimer;
@@ -177,11 +204,107 @@ const onInputColor = e => {
   onInputColorTarget = e.target;
   onInputColorTimer = setTimeout(onInputColorLazy, 100);
 };
-addEventListener('input', e=> {
-  if (!e.target) return;
-  if (!e.target.classList) return;
-  if (e.target.classList.contains('color-input')) {
+addEventListener('input',  e=> {
+  const target = e.target;
+  if (!target) return;
+  if (!target.classList) return;
+  if (target.classList.contains('color-input')) {
     onInputColor(e);
+  }
+});
+
+// --------------------
+// - Color thumbnails -
+// --------------------
+dest.classList.add('auto-link-color');
+const isAutoLinkColor = () => dest.classList.contains('auto-link-color');
+
+const onClickGuiColorThumb = target => {
+  const key = target.getAttribute('data-target');
+  if (!key) return;
+  ciThumb.setAttribute('data-target', key);
+  ciThumb.value = colorsGui[key];
+  ciThumb.focus();
+  ciThumb.click();
+};
+
+const createCtermDlg = () => {
+  if (ctermDlg) return;
+  const f = document.createDocumentFragment();
+  let x = 0;
+  for (const c of termColors) {
+    const tile = document.createElement('DIV');
+    tile.id = 'cterm_dlg_tile_' + c.index;
+    tile.className = 'cterm-dlg-tile';
+    tile.title = c.index;
+    tile.style.background = toHex(c);
+    f.appendChild(tile);
+    if (++x === 16) {
+      f.appendChild(document.createElement('BR'));
+      x = 0;
+    }
+  }
+  ctermDlg = document.createElement('DIV');
+  ctermDlg.className = 'cterm-dlg transparent';
+  ctermDlg.appendChild(f);
+  ctermDlg.addEventListener('blur', () => {
+    ctermDlg.classList.add('transparent');
+  });
+  document.body.appendChild(ctermDlg);
+};
+
+const hideCtermDlg = () => {
+  if (!ctermDlg) return;
+  ctermDlg.classList.add('transparent');
+};
+
+const onClickCtermColorThumb = target => {
+  createCtermDlg();
+  const dataTarget = target.getAttribute('data-target');
+  ctermDlg.setAttribute('data-target', dataTarget);
+  // Update selected.
+  const selected = ctermDlg.getElementsByClassName('selected')[0];
+  selected && selected.classList.remove('selected');
+  const index = colorsCterm[dataTarget];
+  const targetTile = document.getElementById('cterm_dlg_tile_' + index);
+  targetTile && targetTile.classList.add('selected');
+  // Show
+  const rect = target.getBoundingClientRect();
+  ctermDlg.style.left = (rect.right + rect.width + scrollX) + 'px';
+  ctermDlg.style.top = (rect.top + scrollY) + 'px';
+  ctermDlg.classList.remove('transparent');
+  ctermDlg.focus();
+};
+
+const onClickCtermDlgTile = target => {
+  const key = ctermDlg.getAttribute('data-target');
+  colorsCterm[key] = target.title;
+  if (isAutoLinkColor()) {
+    colorsGui[key] = toHex(termColors[target.title]);
+  }
+  applyColors();
+};
+
+addEventListener('click', e=> {
+  const target = e.target;
+  if (!target) return;
+  if (!target.classList) return;
+  if (target.classList.contains('gui-color-thumb')) {
+    onClickGuiColorThumb(target);
+    return;
+  }
+  if (target.classList.contains('cterm-color-thumb')) {
+    onClickCtermColorThumb(target);
+    return;
+  }
+  if (target.classList.contains('cterm-dlg-tile')) {
+    onClickCtermDlgTile(target);
+    return;
+  } else {
+    hideCtermDlg();
+  }
+  if (target.classList.contains('btn-auto-link-color')) {
+    dest.classList.toggle('auto-link-color');
   }
 });
 
@@ -219,12 +342,6 @@ document.getElementById('file_pic').addEventListener('input', async e => {
       pixels.push(pixel);
     }
   }
-  const toHex = rgb => {
-    return '#' +
-      ('0' + rgb.r.toString(16)).slice(-2) +
-      ('0' + rgb.g.toString(16)).slice(-2) +
-      ('0' + rgb.b.toString(16)).slice(-2);
-  };
   // Sort by Lightness
   pixels.sort((a, b) => a.l - b.l);
   const darkest = pixels[0];
