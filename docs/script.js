@@ -193,57 +193,57 @@ cbBackground.checked = false;
 cbBackground.addEventListener('click', applyColors);
 
 // Sampling
-document.getElementById('file_pic').addEventListener('input', e => {
-  const r = new FileReader();
-  r.onload = e2 => {
-    const img = new Image();
-    img.onload = async e3 => {
-      const canvas = document.getElementById('work_canvas');
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(e3.target, 0, 0, canvas.width, canvas.height);
-      let picks = [];
-      const w = canvas.width;
-      const h = canvas.height;
-      for (let x = 0; x < w; x ++) {
-        for (let y = 0; y < h; y ++) {
-          const data = ctx.getImageData(x, y, 1, 1).data;
-          const c = { r: data[0], g: data[1], b: data[2] };
-          if (!c.r && !c.g && !c.b) continue;
-          Object.assign(c, rgbToHSL(c));
-          picks.push(c);
-        }
-      }
-      const rgbToHex = rgb => {
-        return '#' +
-          ('0' + rgb.r.toString(16)).slice(-2) +
-          ('0' + rgb.g.toString(16)).slice(-2) +
-          ('0' + rgb.b.toString(16)).slice(-2);
-      };
-      const n = function(a, b) {
-        return Math.floor(picks.length * a / b);
-      };
-      picks.sort((a, b) => b.l - a.l);
-      const n0 = picks.slice(-1)[0];
-      const n4 = picks[0];
-      applyOneColor('n0', rgbToHex(n0));
-      applyOneColor('n4', rgbToHex(n4));
-      const minL = (n4.l - n0.l) * 2 / 5 + n0.l;
-      const maxL = (n4.l - n0.l) * 4 / 5 + n0.l;
-      picks = picks.filter(c => (minL < c.l && c.l < maxL));
-      picks.sort((a, b) => b.s - a.s);
-      const minS = picks[0].s / 4;
-      picks = picks.filter(c => minS < c.s);
-      picks.sort((a, b) => a.h - b.h);
-      applyOneColor('b4', rgbToHex(picks[n(3, 4)]));
-      applyOneColor('g4', rgbToHex(picks[n(2, 4)]));
-      applyOneColor('y4', rgbToHex(picks[n(1, 4)]));
-      applyOneColor('r4', rgbToHex(picks[0]));
-      refreshColorInputs();
-      applyColors();
-    };
-    img.src = e2.target.result;
+document.getElementById('file_pic').addEventListener('input', async e => {
+  const reader = new FileReader();
+  const img = new Image();
+  await new Promise(resolve => {
+    reader.onload = resolve;
+    reader.readAsDataURL(e.target.files[0]);
+  });
+  await new Promise(resolve => {
+    img.onload = resolve;
+    img.src = reader.result;
+  });
+  const canvas = document.getElementById('work_canvas');
+  const w = canvas.width;
+  const h = canvas.height;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0, w, h);
+  let picks = [];
+  for (let x = 0; x < w; x ++) {
+    for (let y = 0; y < h; y ++) {
+      const data = ctx.getImageData(x, y, 1, 1).data;
+      const c = { r: data[0], g: data[1], b: data[2] };
+      if (!c.r && !c.g && !c.b) continue;
+      Object.assign(c, rgbToHSL(c));
+      picks.push(c);
+    }
+  }
+  const rgbToHex = rgb => {
+    return '#' +
+      ('0' + rgb.r.toString(16)).slice(-2) +
+      ('0' + rgb.g.toString(16)).slice(-2) +
+      ('0' + rgb.b.toString(16)).slice(-2);
   };
-  r.readAsDataURL(e.target.files[0]);
+  picks.sort((a, b) => b.l - a.l);
+  const n0 = picks.slice(-1)[0];
+  const n4 = picks[0];
+  applyOneColor('n0', rgbToHex(n0));
+  applyOneColor('n4', rgbToHex(n4));
+  const minL = (n4.l - n0.l) * 2 / 5 + n0.l;
+  const maxL = (n4.l - n0.l) * 4 / 5 + n0.l;
+  picks = picks.filter(c => (minL < c.l && c.l < maxL));
+  picks.sort((a, b) => b.s - a.s);
+  const minS = picks[0].s / 4;
+  picks = picks.filter(c => minS < c.s);
+  picks.sort((a, b) => a.h - b.h);
+  const quoter = a => picks[Math.floor(picks.length * a / 4)];
+  applyOneColor('b4', rgbToHex(quoter(3)));
+  applyOneColor('g4', rgbToHex(quoter(2)));
+  applyOneColor('y4', rgbToHex(quoter(1)));
+  applyOneColor('r4', rgbToHex(quoter(0)));
+  refreshColorInputs();
+  applyColors();
 });
 
 // Name
