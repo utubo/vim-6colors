@@ -84,7 +84,7 @@ const init = () => {
         autoLink.title = 'Link to the gui color';
       }
       subItem.appendChild(thumb);
-      subItem.appendChild(autoCtermColor);
+      subItem.appendChild(autoLink);
     }
     span.className = className;
     span.textContent = line;
