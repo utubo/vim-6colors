@@ -209,39 +209,43 @@ document.getElementById('file_pic').addEventListener('input', async e => {
   const h = canvas.height;
   const ctx = canvas.getContext('2d');
   ctx.drawImage(img, 0, 0, w, h);
-  let picks = [];
+  let pixels = [];
   for (let x = 0; x < w; x ++) {
     for (let y = 0; y < h; y ++) {
       const data = ctx.getImageData(x, y, 1, 1).data;
-      const c = { r: data[0], g: data[1], b: data[2] };
-      if (!c.r && !c.g && !c.b) continue;
-      Object.assign(c, rgbToHSL(c));
-      picks.push(c);
+      if (!data[0] && !data[1] && !data[2]) continue;
+      const pixel = { r: data[0], g: data[1], b: data[2] };
+      Object.assign(pixel, rgbToHSL(pixel));
+      pixels.push(pixel);
     }
   }
-  const rgbToHex = rgb => {
+  const toHex = rgb => {
     return '#' +
       ('0' + rgb.r.toString(16)).slice(-2) +
       ('0' + rgb.g.toString(16)).slice(-2) +
       ('0' + rgb.b.toString(16)).slice(-2);
   };
-  picks.sort((a, b) => b.l - a.l);
-  const n0 = picks.slice(-1)[0];
-  const n4 = picks[0];
-  applyOneColor('n0', rgbToHex(n0));
-  applyOneColor('n4', rgbToHex(n4));
-  const minL = (n4.l - n0.l) * 2 / 5 + n0.l;
-  const maxL = (n4.l - n0.l) * 4 / 5 + n0.l;
-  picks = picks.filter(c => (minL < c.l && c.l < maxL));
-  picks.sort((a, b) => b.s - a.s);
-  const minS = picks[0].s / 4;
-  picks = picks.filter(c => minS < c.s);
-  picks.sort((a, b) => a.h - b.h);
-  const quoter = a => picks[Math.floor(picks.length * a / 4)];
-  applyOneColor('b4', rgbToHex(quoter(3)));
-  applyOneColor('g4', rgbToHex(quoter(2)));
-  applyOneColor('y4', rgbToHex(quoter(1)));
-  applyOneColor('r4', rgbToHex(quoter(0)));
+  // Sort by Lightness
+  pixels.sort((a, b) => a.l - b.l);
+  const darkest = pixels[0];
+  const brightest = pixels.slice(-1)[0];
+  applyOneColor('n0', toHex(darkest));
+  applyOneColor('n4', toHex(brightest));
+  // Remove too bright and too dark.
+  const minL = (brightest.l - darkest.l) * 2 / 5 + darkest.l;
+  const maxL = (brightest.l - darkest.l) * 4 / 5 + darkest.l;
+  pixels = picks.filter(c => (minL < c.l && c.l < maxL));
+  // Remove gray.
+  pixels.sort((a, b) => b.s - a.s);
+  const minS = pixels[0].s / 4;
+  pixels = picks.filter(c => minS < c.s);
+  // Sort by hue.(0=red, 90=yellow, 180=green, 270=blue)
+  pixels.sort((a, b) => a.h - b.h);
+  const quoter = a => pixels[Math.floor(picks.length * a / 4)];
+  applyOneColor('b4', toHex(quoter(3)));
+  applyOneColor('g4', toHex(quoter(2)));
+  applyOneColor('y4', toHex(quoter(1)));
+  applyOneColor('r4', toHex(quoter(0)));
   refreshColorInputs();
   applyColors();
 });
