@@ -192,6 +192,12 @@ const onInputColorLazy = () => {
     if (isAutoLinkColor()) {
       colorsCterm[key] = findTermColor(colorsGui[key]).index;
     }
+  } else if (key === 'n0') {
+    applyOneColor('n4', colorsGui.n4);
+    applyOneColor('b4', colorsGui.b4);
+    applyOneColor('g4', colorsGui.g4);
+    applyOneColor('y4', colorsGui.y4);
+    applyOneColor('r4', colorsGui.r4);
   } else {
     applyOneColor(key, value);
   }
