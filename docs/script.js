@@ -380,13 +380,17 @@ const applyTextInfo = () => {
   lines[1].textContent = `" Author: ${author || '***'}`;
 };
 document.getElementById('btn_name').addEventListener('click', e=> {
-  colorSchemeName = prompt('Input the color scheme name.', colorSchemeName) || '';
+  const i = prompt('Input the color scheme name.', colorSchemeName);
+  if (i === null) return;
+  colorSchemeName = i || '';
   applyTextInfo();
 });
 
 // Author
 document.getElementById('btn_author').addEventListener('click', e=> {
-  author = prompt('Input your name. (Author)', author) || '';
+  const i = prompt('Input your name. (Author)', author);
+  if (i === null) return;
+  author = i || '';
   applyTextInfo();
 });
 
