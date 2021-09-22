@@ -1,16 +1,16 @@
 .dest {
-	border-radius: .25rem;
-	padding: .5rem;
-	position: relative;
+  border-radius: .25rem;
+  padding: .5rem;
+  position: relative;
 }
 
 .line {
-	display: block;
-	font-family: monospace;
-	min-height: 1rem;
-	position: relative;
-	transition: .5s;
-	white-space: pre;
+  display: block;
+  font-family: monospace;
+  min-height: 1rem;
+  position: relative;
+  transition: .5s;
+  white-space: pre;
 }
 
 .bold { font-weight: bold; }
@@ -19,148 +19,148 @@
 .undercurl { text-decoration: underline wavy; }
 
 .gui-color-thumb, .cterm-color-thumb, .cterm-dlg-tile {
-	border: 1px solid #9999;
-	content: '';
-	cursor: pointer;
-	display: inline-block;
-	height: .8rem;
-	margin-left: .5rem;
-	width: .8rem;
+  border: 1px solid #9999;
+  content: '';
+  cursor: pointer;
+  display: inline-block;
+  height: .8rem;
+  margin-left: .5rem;
+  width: .8rem;
 }
 
 .btn-auto-link-color::after {
-	content: '🔗';
-	cursor: pointer;
-	display: inline;
-	font-size: .8rem;
-	margin-left: .2rem;
-	opacity: 0;
-	vertical-align: top;
-	transition: opacity .1s .1s;
+  content: '🔗';
+  cursor: pointer;
+  display: inline;
+  font-size: .8rem;
+  margin-left: .2rem;
+  opacity: 0;
+  vertical-align: top;
+  transition: opacity .1s .1s;
 }
 .line:hover .btn-auto-link-color::after {
-	opacity: .5;
+  opacity: .5;
 }
 .auto-link-color .line:hover .btn-auto-link-color::after {
-	opacity: 1;
+  opacity: 1;
 }
 
 .cterm-dlg {
-	background: #9999;
-	border-radius: .25rem;
-	margin: -1rem 0 0 1.5rem;
-	line-height: 0;
-	opacity: 1;
-	padding: 1rem;
-	position: absolute;
-	transition: .2s;
-	z-index: 2;
+  background: #9999;
+  border-radius: .25rem;
+  margin: -1rem 0 0 1.5rem;
+  line-height: 0;
+  opacity: 1;
+  padding: 1rem;
+  position: absolute;
+  transition: .2s;
+  z-index: 2;
 }
 
 .cterm-dlg-tile {
-	border: 2px solid #0000;
-	margin: 1pt;
+  border: 2px solid #0000;
+  margin: 1pt;
 }
 
 .selected {
-	border-color: #fff;
+  border-color: #fff;
 
 }
 
 .header {
-	background: #9999;
-	border-radius: .25rem;
-	margin: 0 1rem 1rem 1rem;
-	padding: .5rem 1rem;
-	position: sticky;
-	text-align: center;
-	top: 1rem;
-	z-index: 1;
+  background: #9999;
+  border-radius: .25rem;
+  margin: 0 1rem 1rem 1rem;
+  padding: .5rem 1rem;
+  position: sticky;
+  text-align: center;
+  top: 1rem;
+  z-index: 1;
 }
 
 .color-button {
-	border: 1pt solid;
-	border-radius: 50%;
-	cursor: pointer;
-	display: inline-block;
-	font-size: .8rem;
-	height: 2rem;
-	line-height: 2rem;
-	margin: .1rem;
-	text-align: center;
-	transition: .5s;
-	width: 2rem;
+  border: 1pt solid;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-block;
+  font-size: .8rem;
+  height: 2rem;
+  line-height: 2rem;
+  margin: .1rem;
+  text-align: center;
+  transition: .5s;
+  width: 2rem;
 }
 
 .button {
-	cursor: pointer;
-	line-height: 2rem;
-	text-decoration: none;
+  cursor: pointer;
+  line-height: 2rem;
+  text-decoration: none;
 }
 
 .hidden {
-	display: none;
+  display: none;
 }
 
 .transparent {
-	opacity: 0;
-	pointer-events: none;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .modal-base {
-	cursor: not-allowed;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100%;
-	position: fixed;
-	top: 0;
-	transition: .2s opacity;
-	width: 100%;
-	z-index: 2;
+  cursor: not-allowed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  transition: .2s opacity;
+  width: 100%;
+  z-index: 2;
 }
 .modal {
-	background: #9999;
-	border-radius: .25rem;
-	cursor: default;
-	text-align: center;
+  background: #9999;
+  border-radius: .25rem;
+  cursor: default;
+  text-align: center;
 }
 .modal-content,
 .modal-buttons {
-	margin: 1rem;
+  margin: 1rem;
 }
 .modal-button {
-	background: #333;
-	border: none;
-	border-radius: .25rem;
-	color: #eee;
-	cursor: pointer;
-	min-width: 5rem;
-	padding: .5rem 1rem;
-	margin: 0 .5rem;
+  background: #333;
+  border: none;
+  border-radius: .25rem;
+  color: #eee;
+  cursor: pointer;
+  min-width: 5rem;
+  padding: .5rem 1rem;
+  margin: 0 .5rem;
 }
 .slider {
-	-webkit-appearance: none;
-	appearance: none;
-	cursor: pointer;
-	outline: none;
-	height: .6rem;
-	background: #555;
-	border-radius:.3rem;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  height: .6rem;
+  background: #555;
+  border-radius:.3rem;
 }
 .slider::-webkit-slider-thumb,
 .slider::-moz-range-thumb {
-	background: #333;
-	border: 2pt solid #fff;
-	border-radius: 50%;
+  background: #333;
+  border: 2pt solid #fff;
+  border-radius: 50%;
 }
 #slider_h {
-	background: linear-gradient(to right, #f36, #6f3, #39f)
+  background: linear-gradient(to right, #f36, #6f3, #39f)
 }
 #slider_s {
-	background: linear-gradient(to right, #888, #39f)
+  background: linear-gradient(to right, #888, #39f)
 }
 #slider_l {
-	background: linear-gradient(to right, #222, #eee)
+  background: linear-gradient(to right, #222, #eee)
 }
 
