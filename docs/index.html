@@ -26,6 +26,7 @@
 			<span  class="button" id="btn_download" title="Download">💾</span>
 			<a class="button" href="#" id="btn_permalink" title="Permalink">🔗</a>
 			<label class="button" for="file_pic" title="Sampling">🧪</label>
+			<span  class="button" id="btn_hsl" title="Download">🎚</span>
 			<a class="button" href="https://github.com/utubo/vim-6colors" target="_blank" title="Github">🐙</a>
 		</div>
 		<div id="dest" class="dest fg-n3 bg-n0">
@@ -44,6 +45,19 @@
 			<input id="file_pic" type="file" accept="image/png, image/jpeg">
 			<canvas id="work_canvas" width="32" height="32"></canvas>
 			<a id="ln_download" href="#" download="mycolor.vim"></a>
+		</div>
+		<div id="modal_hsl" class="modal-base transparent">
+			<div class="modal">
+				<div class="modal-content">
+					<input id="slider_h" class="slider" type="range" min="-180" max="180">
+					<input id="slider_s" class="slider" type="range" min="-100" max="100">
+					<input id="slider_l" class="slider" type="range" min="-100" max="100">
+				</div>
+				<div class="modal-buttons">
+					<input type="button" class="modal-button" id="btn_resethsl" value="RESET">
+					<input type="button" class="modal-button" id="btn_okhsl"     value="OK">
+				</div>
+			</div>
 		</div>
 		<script src="https://utubo.github.io/js-cheep-compressor/cheep-compressor.min.js"></script>
 		<script src="default_color.js"></script>

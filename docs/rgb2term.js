@@ -257,6 +257,13 @@ const termColors = [
 { index:255, hex:'#eeeeee', r:238, g:238, b:238, h:0, s:0.0, l:0.93 }
 ];
 
+const rgbToHex = rgb => {
+  return '#' +
+    ('0' + rgb.r.toString(16)).slice(-2) +
+    ('0' + rgb.g.toString(16)).slice(-2) +
+    ('0' + rgb.b.toString(16)).slice(-2);
+};
+
 const hexToRGB = hex => {
 	return {
 		r: parseInt(hex.substring(1, 3), 16),
@@ -292,6 +299,13 @@ const rgbToHSL = c => {
 	}
 	let l = cnt / 255;
 	return { h: h, s: s, l: l };
+};
+
+const hslToRGB = hsl => {
+	const k = n => (n + hsl.h / 30) % 12;
+	const a = hsl.s * Math.min(hsl.l, 1 - hsl.l);
+	const f = n => Math.floor(255 * (hsl.l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))));
+	return {r: f(0), g: f(8), b: f(4) };
 };
 
 const pickupTermColors = hex => {

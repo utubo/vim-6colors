@@ -13,12 +13,8 @@ let author = '';
 const colorsGui = {};
 const colorsCterm = {};
 
-const toHex = rgb => {
-  return '#' +
-    ('0' + rgb.r.toString(16)).slice(-2) +
-    ('0' + rgb.g.toString(16)).slice(-2) +
-    ('0' + rgb.b.toString(16)).slice(-2);
-};
+const middle = (a, b, c) => [a, b, c].sort()[1];
+const deepCopy = o => JSON.parse(JSON.stringify(o));
 
 const init = () => {
   const fragment = document.createDocumentFragment();
@@ -352,8 +348,8 @@ document.getElementById('file_pic').addEventListener('input', async e => {
   pixels.sort((a, b) => a.l - b.l);
   const darkest = pixels[0];
   const brightest = pixels.slice(-1)[0];
-  applyOneColor('n0', toHex(darkest));
-  applyOneColor('n4', toHex(brightest));
+  applyOneColor('n0', rgbToHex(darkest));
+  applyOneColor('n4', rgbToHex(brightest));
   // Remove too bright and too dark.
   const minL = (brightest.l - darkest.l) * 2 / 5 + darkest.l;
   const maxL = (brightest.l - darkest.l) * 4 / 5 + darkest.l;
@@ -365,10 +361,10 @@ document.getElementById('file_pic').addEventListener('input', async e => {
   // Sort by hue.(0=red, 90=yellow, 180=green, 270=blue)
   pixels.sort((a, b) => a.h - b.h);
   const quoter = a => pixels[Math.floor(pixels.length * a / 4)];
-  applyOneColor('b4', toHex(quoter(3)));
-  applyOneColor('g4', toHex(quoter(2)));
-  applyOneColor('y4', toHex(quoter(1)));
-  applyOneColor('r4', toHex(quoter(0)));
+  applyOneColor('b4', rgbToHex(quoter(3)));
+  applyOneColor('g4', rgbToHex(quoter(2)));
+  applyOneColor('y4', rgbToHex(quoter(1)));
+  applyOneColor('r4', rgbToHex(quoter(0)));
   refreshColorInputs();
   applyColors();
 });
@@ -442,6 +438,73 @@ document.getElementById('btn_permalink').addEventListener('click', e => {
   e.target.href = href;
 });
 
+// HSL sliders
+const hslSliderModle = document.getElementById('modal_hsl');
+const sliderH = document.getElementById('slider_h');
+const sliderS = document.getElementById('slider_s');
+const sliderL = document.getElementById('slider_l');
+let beforeColorsGui = {};
+let beforeColorsCterm = {};
+const showHSLSlider = () => {
+  beforeColorsGui = deepCopy(colorsGui);
+  beforeColorsCterm = deepCopy(colorsCterm);
+  sliderH.value = 0;
+  sliderS.value = 0;
+  sliderL.value = 0;
+  hslSliderModle.classList.remove('transparent');
+};
+const okHSLSlider = () => {
+  hslSliderModle.classList.add('transparent');
+};
+const resetHSLSlider = () => {
+  Object.assign(colorsGui, beforeColorsGui);
+  Object.assign(colorsCterm, beforeColorsCterm);
+  refreshColorInputs();
+  applyColors();
+  sliderH.value = 0;
+  sliderS.value = 0;
+  sliderL.value = 0;
+};
+const onInputSliderLazy = () => {
+  const h = Number(sliderH.value);
+  const s = (sliderS.value) / 100;
+  const l = (sliderL.value) / 100;
+  const contrast = value => {
+    if (value < 128) {
+      return middle(0, value - c, 127);
+    } else{
+      return middle(128, value + c, 255);
+    }
+  };
+  const getNewValue = value => {
+      const hsl = rgbToHSL(hexToRGB(value));
+      hsl.h += h;
+      if  (hsl.h > 360) hsl.h -= Number(360);
+      hsl.s = middle(Number(0), Number(1), hsl.s + s);
+      hsl.l = middle(Number(0), Number(1), hsl.l + l);
+      return rgbToHex(hslToRGB(hsl));
+  };
+  for (let [key, value] of Object.entries(beforeColorsGui)) {
+    colorsGui[key] = getNewValue(value);
+  }
+  for (let [key, value] of Object.entries(beforeColorsCterm)) {
+    colorsCterm[key] = findTermColor(getNewValue(termColors[value].hex)).index;
+  }
+  refreshColorInputs();
+  applyColors();
+};
+let onInputSliderTimer;
+hslSliderModle.addEventListener('input', e => {
+  clearTimeout(onInputSliderTimer);
+  onInputSliderTimer = setTimeout(onInputSliderLazy, 50);
+});
+document.getElementById('btn_hsl').addEventListener('click', showHSLSlider);
+document.getElementById('btn_okhsl').addEventListener('click', okHSLSlider);
+document.getElementById('btn_resethsl').addEventListener('click', resetHSLSlider);
+
+// ----------------
+// - START HERE ! -
+// ----------------
 init();
 if (location.search.match(/n=([^&]+)/)) {
   colorSchemeName = decodeURI(RegExp.$1).slice(0, 255);
