@@ -265,64 +265,64 @@ const rgbToHex = rgb => {
 };
 
 const hexToRGB = hex => {
-	return {
-		r: parseInt(hex.substring(1, 3), 16),
-		g: parseInt(hex.substring(3, 5), 16),
-		b: parseInt(hex.substring(5, 7), 16)
-	};
+  return {
+    r: parseInt(hex.substring(1, 3), 16),
+    g: parseInt(hex.substring(3, 5), 16),
+    b: parseInt(hex.substring(5, 7), 16)
+  };
 };
 const rgbToHSL = c => {
-	let max = Math.max(c.r, c.g, c.b);
-	let min = Math.min(c.r, c.g, c.b);
-	let m = Number(max - min);
-	let h;
-	if (c.r === c.g && c.r === c.b && c.g === c.b) {
-		h = 0;
-	} else if (max === c.r) {
-		h = 60 * (c.g - c.b) / m;
-	} else if (max === c.g) {
-		h = 60 * (c.b - c.r) / m + 120;
-	} else {
-		h = 60 * (c.r - c.g) / m + 240;
-	}
-	if (h < 0) {
-		h += 360;
-	}
-	const cnt = (max + min) / 2;
-	let s;
-	if (!m) {
-		s = 0;
-	} else if (cnt < 127) {
-		s = m / (max + min);
-	} else {
-		s = m / (510 - max - min);
-	}
-	let l = cnt / 255;
-	return { h: h, s: s, l: l };
+  let max = Math.max(c.r, c.g, c.b);
+  let min = Math.min(c.r, c.g, c.b);
+  let m = Number(max - min);
+  let h;
+  if (c.r === c.g && c.r === c.b && c.g === c.b) {
+    h = 0;
+  } else if (max === c.r) {
+    h = 60 * (c.g - c.b) / m;
+  } else if (max === c.g) {
+    h = 60 * (c.b - c.r) / m + 120;
+  } else {
+    h = 60 * (c.r - c.g) / m + 240;
+  }
+  if (h < 0) {
+    h += 360;
+  }
+  const cnt = (max + min) / 2;
+  let s;
+  if (!m) {
+    s = 0;
+  } else if (cnt < 127) {
+    s = m / (max + min);
+  } else {
+    s = m / (510 - max - min);
+  }
+  let l = cnt / 255;
+  return { h: h, s: s, l: l };
 };
 
 const hslToRGB = hsl => {
-	const k = n => (n + hsl.h / 30) % 12;
-	const a = hsl.s * Math.min(hsl.l, 1 - hsl.l);
-	const f = n => Math.floor(255 * (hsl.l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))));
-	return {r: f(0), g: f(8), b: f(4) };
+  const k = n => (n + hsl.h / 30) % 12;
+  const a = hsl.s * Math.min(hsl.l, 1 - hsl.l);
+  const f = n => Math.floor(255 * (hsl.l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))));
+  return {r: f(0), g: f(8), b: f(4) };
 };
 
 const pickupTermColors = hex => {
-	let rgb = hexToRGB(hex);
-	let hsl = rgbToHSL(rgb);
-	let result = termColors.slice();
-	// Calculate all distance of HSL.
-	for (let term of termColors) {
-		let dh = Math.abs(hsl.h - term.h) / 360;
-		dh = Math.min(dh, 1 - dh);
-		let ds = Math.abs(hsl.s - term.s);
-		let dl = Math.abs(hsl.l - term.l);
-		term.distance = dh * (hsl.s + term.s) + ds + dl * 2;
-	}
-	// Order by distance.
-	result.sort((a, b) => (a.distance - b.distance));
-	return result;
+  let rgb = hexToRGB(hex);
+  let hsl = rgbToHSL(rgb);
+  let result = termColors.slice();
+  // Calculate all distance of HSL.
+  for (let term of termColors) {
+    let dh = Math.abs(hsl.h - term.h) / 360;
+    dh = Math.min(dh, 1 - dh);
+    let ds = Math.abs(hsl.s - term.s);
+    let dl = Math.abs(hsl.l - term.l);
+    term.distance = dh * (hsl.s + term.s) + ds + dl * 2;
+  }
+  // Order by distance.
+  result.sort((a, b) => (a.distance - b.distance));
+  return result;
 };
 
 const findTermColor = hex => pickupTermColors(hex)[0];
