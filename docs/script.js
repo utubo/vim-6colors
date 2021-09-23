@@ -73,17 +73,16 @@ const init = () => {
       const thumb = document.createElement('SPAN');
       const autoLink = document.createElement('SPAN');
       autoLink.className = 'btn-auto-link-color';
+      autoLink.title = 'Link the color of gui and the color of cterm';
       thumb.setAttribute('data-target', colorName);
       if (isGui) {
         colorsGui[colorName] = value;
         thumb.style.background = value;
         thumb.className += ' gui-color-thumb';
-        autoLink.title = 'Link to the cterm color';
       } else {
         colorsCterm[colorName] = value;
         thumb.style.background = termColors[value].hex;
         thumb.className += ' cterm-color-thumb';
-        autoLink.title = 'Link to the gui color';
       }
       subItem.appendChild(thumb);
       subItem.appendChild(autoLink);

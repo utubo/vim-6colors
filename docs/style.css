@@ -30,7 +30,7 @@
 }
 
 .btn-auto-link-color::after {
-  content: '🔗';
+  content: '🖱🔗💻';
   cursor: pointer;
   display: inline;
   font-size: .8rem;
