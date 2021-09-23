@@ -221,8 +221,8 @@ exe 'hi PmenuThumb'    s:bg s:b3
 " ------------
 exe 'hi SpellBad'      s:fg s:r3 s:bg s:r1 s:sp s:r4 s:undercurl
 exe 'hi SpellCap'      s:fg s:y3 s:bg s:n0 s:sp s:y4 s:undercurl
-exe 'hi SpellLocal'    s:fg s:g3 s:bg s:n0
-exe 'hi SpellRare'     s:fg s:b3 s:bg s:n0
+exe 'hi SpellLocal'    s:fg s:g3 s:bg s:n0 s:sp s:g4 s:undercurl
+exe 'hi SpellRare'     s:fg s:b3 s:bg s:n0 s:sp s:b4 s:undercurl
 
 " ---------------------
 " - Specific settings -
