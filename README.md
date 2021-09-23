@@ -9,3 +9,10 @@ https://utubo.github.io/vim-6colors/
 - https://github.com/utubo/vim-colorscheme-rainycity
 
 [more...](https://github.com/utubo/vim-6colors/wiki/Examples)
+
+## Plugins support
+- ALE
+- Easy Motion
+- Git Gutter
+- [rainbow](https://github.com/luochen1990/rainbow)
+- [rainbow-csv](https://github.com/mechatroner/rainbow_csv)
