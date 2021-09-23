@@ -1,6 +1,6 @@
 const BASE_URL = location.href.replace(/\?.*/, '');
 const styleSheet = document.styleSheets[0];
-const dest = document.getElementById('dest');
+const source = document.getElementById('source');
 const cbBackground = document.getElementById('cb_background');
 const cbAutoLinkColor = document.getElementById('cb_auto_link_color');
 const cbN0 = document.getElementById('cb_n0');
@@ -95,7 +95,7 @@ const init = () => {
   for (let after of afterLink) {
     after.span.className = hiMap[after.link] || 'line';
   }
-  dest.replaceChild(fragment, dest.firstChild);
+  source.replaceChild(fragment, source.firstChild);
   refreshColorInputs();
 };
 
@@ -218,8 +218,8 @@ addEventListener('input',  e=> {
 // --------------------
 // - Color thumbnails -
 // --------------------
-dest.classList.add('auto-link-color');
-const isAutoLinkColor = () => dest.classList.contains('auto-link-color');
+source.classList.add('auto-link-color');
+const isAutoLinkColor = () => source.classList.contains('auto-link-color');
 
 const onClickGuiColorThumb = target => {
   const key = target.getAttribute('data-target');
@@ -304,7 +304,7 @@ addEventListener('click', e=> {
     return;
   }
   if (target.classList.contains('btn-auto-link-color')) {
-    dest.classList.toggle('auto-link-color');
+    source.classList.toggle('auto-link-color');
     return;
   }
   hideCtermDlg();
@@ -394,7 +394,7 @@ document.getElementById('btn_author').addEventListener('click', e=> {
 document.getElementById('btn_download').addEventListener('click', e=> {
   const lnDownload = document.getElementById('ln_download');
   const lines = [];
-  for (let line of dest.getElementsByClassName('line')) {
+  for (let line of source.getElementsByClassName('line')) {
     lines.push(line.textContent);
   }
   lnDownload.download = `${colorSchemeName || 'mycolor'}.vim`;

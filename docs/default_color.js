@@ -252,7 +252,7 @@ function s:CustomSyntax()
     exe 'augroup CustomSyntax_' . s:colors_name . '|au!|augroup END'
     return
   endif
-  " GitGuitter
+  " GitGutter
   exe 'hi GitGutterAdd' s:fg s:g3 s:bg s:n1
   exe 'hi GitGutterChange' s:fg s:y3 s:bg s:n1
   exe 'hi GitGutterDelete' s:fg s:r3 s:bg s:n1
