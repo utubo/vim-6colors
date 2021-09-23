@@ -2,6 +2,7 @@
   border-radius: .25rem;
   padding: .5rem;
   position: relative;
+  transition: .5s;
 }
 
 .line {
