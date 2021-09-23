@@ -2,12 +2,14 @@ const BASE_URL = location.href.replace(/\?.*/, '');
 const styleSheet = document.styleSheets[0];
 const source = document.getElementById('source');
 const cbBackground = document.getElementById('cb_background');
+const btnCterm = document.getElementById('btn_cterm');
 const cbAutoLinkColor = document.getElementById('cb_auto_link_color');
 const cbN0 = document.getElementById('cb_n0');
 const cbN4 = document.getElementById('cb_n4');
 const ciThumb = document.getElementById('ci_xx');
 let ctermDlg;
 
+let previewCterm = false;
 let colorSchemeName = '';
 let author = '';
 const colorsGui = {};
@@ -113,14 +115,23 @@ const lightColors = {
   r1: 'r3', r3: 'r1', r4: 'r9',
 };
 const applyColors = async (opt = {}) => {
+  // Clear CSS
   for (let i = styleSheet.cssRules.length - 1; 0 <= i; i --) {
     styleSheet.deleteRule(i);
   }
+  // for the Preview mode
+  let getValue = (c, v) => v; // default
+  if (previewCterm) {
+    getValue = (c, v) => {
+      const t = termColors[colorsCterm[cbBackground.checked ? lightColors[c] : c]];
+      return t ? t.hex : v;
+    };
+  } else if (cbBackground.checked) {
+    getValue = (c, v) => colorsGui[lightColors[c]];
+  }
+  // Add css rules
   for (let [c, value] of Object.entries(colorsGui)) {
-    let v = value;
-    if (cbBackground.checked) {
-      v = colorsGui[lightColors[c] || c];
-    }
+    let v = getValue(c, value);
     styleSheet.insertRule(`.fg-${c} { color: ${v}; }`);
     styleSheet.insertRule(`.bg-${c} { background: ${v}; }`);
     styleSheet.insertRule(`.sp-${c} { border-color: ${v}; }`);
@@ -308,8 +319,7 @@ addEventListener('click', e=> {
     onClickCtermDlgTile(target);
     return;
   }
-  if (target.classList.contains('btn-auto-link-color')) {
-    source.classList.toggle('auto-link-color');
+  if (target.classList.contains('btn-auto-link-color')) { source.classList.toggle('auto-link-color');
     return;
   }
   hideCtermDlg();
@@ -321,6 +331,18 @@ addEventListener('click', e=> {
 // Background
 cbBackground.checked = false;
 cbBackground.addEventListener('click', applyColors);
+
+// Cterm
+btnCterm.classList.add('disabled');
+btnCterm.addEventListener('click', e => {
+  previewCterm = !previewCterm;
+  if (previewCterm) {
+    btnCterm.classList.remove('disabled');
+  } else{
+    btnCterm.classList.add('disabled');
+  }
+  applyColors();
+});
 
 // Sampling
 document.getElementById('file_pic').addEventListener('input', async e => {

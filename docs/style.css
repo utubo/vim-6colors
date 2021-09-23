@@ -92,10 +92,20 @@
   width: 2rem;
 }
 
+.separator {
+  border-left: .5pt solid;
+  margin: 0 .3rem;
+}
+
 .button {
   cursor: pointer;
   line-height: 2rem;
   text-decoration: none;
+  transition: .3s;
+}
+
+.disabled {
+  opacity: .5;
 }
 
 .hidden {
