@@ -93,10 +93,13 @@ endif
 
 let s:fg     = s:term.'fg='
 let s:bg     = s:term.'bg='
+let s:sp     = s:term ==# 'gui' ? 'guisp=' : 'ctermul='
 let s:style  = s:term.'='
 let s:none   = s:style.'NONE'
 let s:bold   = s:style.'bold'
 let s:italic = s:style.'italic'
+let s:underline = s:style.'underline'
+let s:undercurl = s:style.'undercurl'
 
 " --------
 " - Base -
@@ -216,8 +219,8 @@ exe 'hi PmenuThumb'    s:bg s:b3
 " ------------
 " - Spelling -
 " ------------
-exe 'hi SpellBad'      s:fg s:r3 s:bg s:r1 s:style 'undercurl'
-exe 'hi SpellCap'      s:fg s:y3 s:bg s:n0 s:style 'undercurl'
+exe 'hi SpellBad'      s:fg s:r3 s:bg s:r1 s:sp s:r4 s:undercurl
+exe 'hi SpellCap'      s:fg s:y3 s:bg s:n0 s:sp s:y4 s:undercurl
 exe 'hi SpellLocal'    s:fg s:g3 s:bg s:n0
 exe 'hi SpellRare'     s:fg s:b3 s:bg s:n0
 

@@ -21,6 +21,7 @@ const init = () => {
   const letColorReg = /let s:([a-z]\d) = '([^']+)'/;
   const fgReg = /s:fg s:([a-z]\d)/;
   const bgReg = /s:bg s:([a-z]\d)/;
+  const spReg = /s:sp s:([a-z]\d)/;
   const hiReg = /exe 'hi (\S+)'/;
   const linkReg = /hi! link (\S+) (\S+)/;
   const hiMap = {};
@@ -39,16 +40,19 @@ const init = () => {
       if (bgReg.test(line)) {
         className += ` bg-${RegExp.$1}`;
       }
+      if (spReg.test(line)) {
+        className += ` sp-${RegExp.$1}`;
+      }
       if (line.includes('s:bold')) {
         className += ' bold';
       }
       if (line.includes('s:italic')) {
         className += ' italic';
       }
-      if (line.includes('underline')) {
+      if (line.includes('s:underline')) {
         className += ' underline';
       }
-      if (line.includes('undercurl')) {
+      if (line.includes('s:undercurl')) {
         className += ' undercurl';
       }
     } else if (linkReg.test(line)) {
@@ -119,6 +123,7 @@ const applyColors = async (opt = {}) => {
     }
     styleSheet.insertRule(`.fg-${c} { color: ${v}; }`);
     styleSheet.insertRule(`.bg-${c} { background: ${v}; }`);
+    styleSheet.insertRule(`.sp-${c} { border-color: ${v}; }`);
     const span = document.getElementById(`gui_${c}`);
     if (!span) continue;
     span.firstChild.nodeValue = span.textContent.replace(quoteReg, `'${value}'`);
