@@ -439,7 +439,7 @@ document.getElementById('btn_permalink').addEventListener('click', e => {
 });
 
 // HSL sliders
-const hslSliderModle = document.getElementById('modal_hsl');
+const hslSliderModal = document.getElementById('modal_hsl');
 const sliderH = document.getElementById('slider_h');
 const sliderS = document.getElementById('slider_s');
 const sliderL = document.getElementById('slider_l');
@@ -451,10 +451,10 @@ const showHSLSlider = () => {
   sliderH.value = 0;
   sliderS.value = 0;
   sliderL.value = 0;
-  hslSliderModle.classList.remove('transparent');
+  hslSliderModal.classList.remove('transparent');
 };
 const okHSLSlider = () => {
-  hslSliderModle.classList.add('transparent');
+  hslSliderModal.classList.add('transparent');
 };
 const resetHSLSlider = () => {
   Object.assign(colorsGui, beforeColorsGui);
@@ -494,7 +494,7 @@ const onInputSliderLazy = () => {
   applyColors();
 };
 let onInputSliderTimer;
-hslSliderModle.addEventListener('input', e => {
+hslSliderModal.addEventListener('input', e => {
   clearTimeout(onInputSliderTimer);
   onInputSliderTimer = setTimeout(onInputSliderLazy, 50);
 });
