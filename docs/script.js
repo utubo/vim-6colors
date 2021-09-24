@@ -187,9 +187,13 @@ const applyOneColor = (colorName, value) => {
   if (c !== 'n') {
     // make c9
     const hsl = hexToHSL(colorsGui[c + '3']);
-    hsl.s = 1;
-    hsl.l *= 0.6;
-    colorsGui[c + '9'] = hslToHex(hsl);
+    if (hsl.h < 180) {
+      hsl.s = 1;
+      hsl.l *= 1.0 - Math.sin(hsl.h / 180 * Math.PI) / 2.0;
+      colorsGui[c + '9'] = hslToHex(hsl);
+    } else {
+      colorsGui[c + '9'] = colorsGui[c + '4'];
+    }
   }
   for (let i of [0, 1, 2, 3, 4, 9]) {
     const key = c + i;
