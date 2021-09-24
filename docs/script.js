@@ -167,9 +167,6 @@ const refreshColorInputs = () => {
 const applyOneColor = (colorName, value) => {
   const c = colorName[0];
   if (colorName[1] === '4') {
-    if (c !== 'n') {
-      colorsGui[c + '9'] = value;
-    }
     const c4RGB = hexToRGB(value);
     const n0RGB = hexToRGB(colorsGui.n0);
     const opacities = [0, 0.2, 0.6, 0.8, 1];
@@ -186,6 +183,13 @@ const applyOneColor = (colorName, value) => {
       }
       colorsGui[c + i] = rgb;
     }
+  }
+  if (c !== 'n') {
+    // make c9
+    const hsl = hexToHSL(colorsGui[c + '3']);
+    hsl.s = 1;
+    hsl.l *= 0.6;
+    colorsGui[c + '9'] = hslToHex(hsl);
   }
   for (let i of [0, 1, 2, 3, 4, 9]) {
     const key = c + i;
@@ -503,12 +507,12 @@ const onInputSliderLazy = () => {
     }
   };
   const getNewValue = value => {
-      const hsl = rgbToHSL(hexToRGB(value));
+      const hsl = hexToHSL(value);
       hsl.h += h;
       if  (hsl.h > 360) hsl.h -= Number(360);
       hsl.s = middle(Number(0), Number(1), hsl.s + s);
       hsl.l = middle(Number(0), Number(1), hsl.l + l);
-      return rgbToHex(hslToRGB(hsl));
+      return hslToHex(hsl);
   };
   for (let [key, value] of Object.entries(beforeColorsGui)) {
     colorsGui[key] = getNewValue(value);

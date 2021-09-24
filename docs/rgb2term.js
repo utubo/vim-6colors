@@ -308,6 +308,9 @@ const hslToRGB = hsl => {
   return {r: f(0), g: f(8), b: f(4) };
 };
 
+const hslToHex = hsl => rgbToHex(hslToRGB(hsl));
+const hexToHSL = hex => rgbToHSL(hexToRGB(hex));
+
 const pickupTermColors = hex => {
   let rgb = hexToRGB(hex);
   let hsl = rgbToHSL(rgb);
