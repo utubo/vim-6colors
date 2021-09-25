@@ -9,7 +9,6 @@ if exists('syntax_on')
 endif
 let s:colors_name = expand('<sfile>:t:r')
 let g:colors_name = s:colors_name
-let s:background = &background
 
 " COLORS
 "   <type><opacity>
@@ -266,7 +265,5 @@ endfunction
 
 exe 'augroup CustomSyntax_' . s:colors_name . '|au!|au ColorScheme,Syntax * call <SID>CustomSyntax()|augroup END'
 call s:CustomSyntax()
-
-exe 'set background='.s:background
 `;
 
