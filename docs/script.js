@@ -107,11 +107,11 @@ const init = () => {
 // Apply colors
 const quoteReg = /'[^']+'/;
 const lightColors = {
-  n0: 'n4', n1: 'n3', n3: 'n1', n4: 'n0',
-  b1: 'b3', b3: 'b1', b4: 'b9',
-  g1: 'g3', g3: 'g1', g4: 'g9',
-  y1: 'y3', y3: 'y1', y4: 'y9',
-  r1: 'r3', r3: 'r1', r4: 'r9',
+  n1: 'n3', n2: 'n2', n3: 'n1', n4: 'n0', n0: 'n4',
+  b1: 'b3', b2: 'b2', b3: 'b1', b4: 'b9',
+  g1: 'g3', g2: 'g2', g3: 'g1', g4: 'g9',
+  y1: 'y3', y2: 'y2', y3: 'y1', y4: 'y9',
+  r1: 'r3', r2: 'r2', r3: 'r1', r4: 'r9',
 };
 const applyColors = async (opt = {}) => {
   // Clear CSS
