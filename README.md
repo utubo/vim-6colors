@@ -16,3 +16,8 @@ https://utubo.github.io/vim-6colors/
 - Git Gutter
 - [rainbow](https://github.com/luochen1990/rainbow)
 - [rainbow-csv](https://github.com/mechatroner/rainbow_csv)
+
+## 🙏
+🍺
+This code for the color scheme based on  [vim_colorscheme_template](https://github.com/ggalindezb/vim_colorscheme_template)
+🍺
