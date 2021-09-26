@@ -106,10 +106,9 @@ let s:undercurl = s:style.'undercurl'
 exe 'hi Normal'        s:fg s:n3 s:bg s:n0
 exe 'hi Cursor'        s:fg s:n4 s:bg s:b4
 exe 'hi CursorIM'      s:fg s:n4 s:bg s:y4
-exe 'hi CursorLine'    s:bg s:n1
+exe 'hi CursorLine'    s:bg s:n1 s:none
 exe 'hi LineNr'        s:fg s:n2 s:bg s:n1
-exe 'hi CursorLineNR'  s:fg s:n4 s:bg s:n2
-exe 'hi CursorLine'    s:bg s:n1
+exe 'hi CursorLineNR'  s:fg s:n4 s:bg s:n2 s:none
 
 " -----------------
 " - Number column -
