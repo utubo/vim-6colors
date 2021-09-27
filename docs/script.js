@@ -105,7 +105,7 @@ const init = () => {
 };
 
 // Apply colors
-const quoteReg = /'[^']+'/;
+const quartereg = /'[^']+'/;
 const lightColors = {
   n1: 'n3', n2: 'n2', n3: 'n1', n4: 'n0', n0: 'n4',
   b1: 'b3', b2: 'b2', b3: 'b1', b4: 'b9',
@@ -136,13 +136,13 @@ const applyColors = async (opt = {}) => {
     styleSheet.insertRule(`.sp-${c} { border-color: ${v}; }`);
     const span = document.getElementById(`gui_${c}`);
     if (!span) continue;
-    span.firstChild.nodeValue = span.textContent.replace(quoteReg, `'${value}'`);
+    span.firstChild.nodeValue = span.textContent.replace(quartereg, `'${value}'`);
     span.getElementsByClassName('gui-color-thumb')[0].style.background = value;
   }
   for (let [c, value] of Object.entries(colorsCterm)) {
     const span = document.getElementById(`cterm_${c}`);
     if (!span) continue;
-    span.firstChild.nodeValue = span.textContent.replace(quoteReg, `'${value}'`);
+    span.firstChild.nodeValue = span.textContent.replace(quartereg, `'${value}'`);
     span.getElementsByClassName('cterm-color-thumb')[0].style.background = termColors[value].hex;
   }
   cbN0.setAttribute('for', cbBackground.checked ? 'ci_n4' : 'ci_n0');
@@ -394,11 +394,22 @@ document.getElementById('file_pic').addEventListener('input', async e => {
   pixels = pixels.filter(c => minS < c.s);
   // Sort by hue.(0=red, 90=yellow, 180=green, 270=blue)
   pixels.sort((a, b) => a.h - b.h);
-  const quoter = a => pixels[Math.floor(pixels.length * a / 4)];
-  applyOneColor('b4', rgbToHex(quoter(3)));
-  applyOneColor('g4', rgbToHex(quoter(2)));
-  applyOneColor('y4', rgbToHex(quoter(1)));
-  applyOneColor('r4', rgbToHex(quoter(0)));
+  // grouping by rounded hues.
+  const rounded = {};
+  for (let p of pixels) {
+    const rh = Math.round(p.h / 4);
+    rounded[rh] = rounded[rh] || [];
+    rounded[rh].push(p);
+  }
+  const quarter = (a, q) => a[Math.floor(a.length * q / 4)];
+  const quarterH = q => {
+    const rh = quarter(Object.keys(rounded), q);
+    return quarter(rounded[rh], 2);
+  };
+  applyOneColor('b4', rgbToHex(quarterH(3)));
+  applyOneColor('g4', rgbToHex(quarterH(2)));
+  applyOneColor('y4', rgbToHex(quarterH(1)));
+  applyOneColor('r4', rgbToHex(quarterH(0)));
   refreshColorInputs();
   applyColors();
 });
