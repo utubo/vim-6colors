@@ -123,8 +123,8 @@ exe 'hi Folded'        s:fg s:n2 s:bg s:n0
 " -------------------------
 exe 'hi VertSplit'     s:bg s:n1
 exe 'hi ColorColumn'   s:fg s:n2 s:bg s:n1
-exe 'hi TabLine'       s:fg s:n2 s:bg s:n1
-exe 'hi TabLineFill'   s:bg s:n1
+exe 'hi TabLine'       s:fg s:n2 s:bg s:n1 s:none
+exe 'hi TabLineFill'   s:bg s:n1 s:none
 exe 'hi TabLineSel'    s:fg s:g3 s:bg s:n0 s:bold
 
 " -------------------------------
