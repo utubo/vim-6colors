@@ -105,7 +105,7 @@ const init = () => {
 };
 
 // Apply colors
-const quartereg = /'[^']+'/;
+const quoteReg = /'[^']+'/;
 const lightColors = {
   n1: 'n3', n2: 'n2', n3: 'n1', n4: 'n0', n0: 'n4',
   b1: 'b3', b2: 'b2', b3: 'b1', b4: 'b9',
@@ -136,13 +136,13 @@ const applyColors = async (opt = {}) => {
     styleSheet.insertRule(`.sp-${c} { border-color: ${v}; }`);
     const span = document.getElementById(`gui_${c}`);
     if (!span) continue;
-    span.firstChild.nodeValue = span.textContent.replace(quartereg, `'${value}'`);
+    span.firstChild.nodeValue = span.textContent.replace(quoteReg, `'${value}'`);
     span.getElementsByClassName('gui-color-thumb')[0].style.background = value;
   }
   for (let [c, value] of Object.entries(colorsCterm)) {
     const span = document.getElementById(`cterm_${c}`);
     if (!span) continue;
-    span.firstChild.nodeValue = span.textContent.replace(quartereg, `'${value}'`);
+    span.firstChild.nodeValue = span.textContent.replace(quoteReg, `'${value}'`);
     span.getElementsByClassName('cterm-color-thumb')[0].style.background = termColors[value].hex;
   }
   cbN0.setAttribute('for', cbBackground.checked ? 'ci_n4' : 'ci_n0');
