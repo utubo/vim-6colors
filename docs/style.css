@@ -14,9 +14,11 @@
 .line-text {
   display: inline-block;
   font-family: monospace;
+  line-height: 1rem;
   min-height: 1rem;
   max-height: 1rem;
   overflow: hidden;
+  padding: 0 .2rem;
   vertical-align: middle;
   white-space: pre;
 }
