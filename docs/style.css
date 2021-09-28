@@ -20,13 +20,6 @@
   white-space: pre;
 }
 
-.cr {
-  display: inline-block;
-  max-height: 1px;
-  overflow: hidden;
-  white-space: pre;
-}
-
 .bold { font-weight: bold; }
 .italic { font-style: italic; }
 .underline { text-decoration: underline; }
