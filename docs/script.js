@@ -139,13 +139,15 @@ const applyColors = async (opt = {}) => {
     styleSheet.insertRule(`.sp-${c} { border-color: ${v}; }`);
     const span = document.getElementById(`gui_${c}`);
     if (!span) continue;
-    span.firstChild.nodeValue = span.textContent.replace(quoteReg, `'${value}'`);
+    let lineText = span.getElementsByClassName('line-text')[0];
+    lineText.textContent = lineText.textContent.replace(quoteReg, `'${value}'`);
     span.getElementsByClassName('gui-color-thumb')[0].style.background = value;
   }
   for (let [c, value] of Object.entries(colorsCterm)) {
     const span = document.getElementById(`cterm_${c}`);
     if (!span) continue;
-    span.firstChild.nodeValue = span.textContent.replace(quoteReg, `'${value}'`);
+    let lineText = span.getElementsByClassName('line-text')[0];
+    lineText.textContent = lineText.textContent.replace(quoteReg, `'${value}'`);
     span.getElementsByClassName('cterm-color-thumb')[0].style.background = termColors[value].hex;
   }
   cbN0.setAttribute('for', cbBackground.checked ? 'ci_n4' : 'ci_n0');
