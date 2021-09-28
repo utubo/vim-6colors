@@ -193,7 +193,7 @@ const applyOneColor = (colorName, value) => {
     // make c9
     const hsl = hexToHSL(colorsGui[c + '3']);
     if (hsl.h < 180) {
-      hsl.s = 1;
+      hsl.s = Math.min(hsl.s * 1.25, 1);
       hsl.l *= 1.0 - Math.sin(hsl.h / 180 * Math.PI) / 2.0;
       colorsGui[c + '9'] = hslToHex(hsl);
     } else {
