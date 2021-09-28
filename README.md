@@ -19,5 +19,5 @@ https://utubo.github.io/vim-6colors/
 
 ## 🙏
 🍺
-This code for the color scheme based on  [vim_colorscheme_template](https://github.com/ggalindezb/vim_colorscheme_template)
+This code for the color scheme is based on  [vim_colorscheme_template](https://github.com/ggalindezb/vim_colorscheme_template)
 🍺
