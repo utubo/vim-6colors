@@ -88,7 +88,10 @@ const init = () => {
       subItem.appendChild(autoLink);
     }
     span.className = className;
-    span.textContent = line;
+    let lineText = document.createElement('SPAN');
+    lineText.className = 'line-text';
+    lineText.textContent = line + '\n';
+    span.appendChild(lineText);
     if (subItem) {
       span.appendChild(subItem);
     }
@@ -416,9 +419,9 @@ document.getElementById('file_pic').addEventListener('input', async e => {
 
 // Name
 const applyTextInfo = () => {
-  const lines = document.getElementsByClassName('line');
-  lines[0].textContent = `" * ${colorSchemeName || 'the color scheme name here'} *`;
-  lines[1].textContent = `" Author: ${author || '***'}`;
+  const lineTexts = document.getElementsByClassName('line-text');
+  lineTexts[0].textContent = `" * ${colorSchemeName || 'the color scheme name here'} *\n`;
+  lineTexts[1].textContent = `" Author: ${author || '***'}\n`;
 };
 document.getElementById('btn_name').addEventListener('click', e=> {
   const i = prompt('Input the color scheme name.', colorSchemeName);
@@ -438,12 +441,8 @@ document.getElementById('btn_author').addEventListener('click', e=> {
 // Download
 document.getElementById('btn_download').addEventListener('click', e=> {
   const lnDownload = document.getElementById('ln_download');
-  const lines = [];
-  for (let line of source.getElementsByClassName('line')) {
-    lines.push(line.textContent);
-  }
   lnDownload.download = `${colorSchemeName || 'mycolor'}.vim`;
-  lnDownload.href = 'data:text/plain;charset=utf8,' + encodeURIComponent(lines.join('\n'));
+  lnDownload.href = 'data:text/plain;charset=utf8,' + encodeURIComponent(source.textContent);
   lnDownload.click();
 });
 

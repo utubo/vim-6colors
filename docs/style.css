@@ -7,10 +7,23 @@
 
 .line {
   display: block;
-  font-family: monospace;
-  min-height: 1rem;
   position: relative;
   transition: .5s;
+}
+
+.line-text {
+  display: inline-block;
+  font-family: monospace;
+  min-height: 1rem;
+  max-height: 1rem;
+  overflow: hidden;
+  white-space: pre;
+}
+
+.cr {
+  display: inline-block;
+  max-height: 1px;
+  overflow: hidden;
   white-space: pre;
 }
 
