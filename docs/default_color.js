@@ -180,7 +180,7 @@ exe 'hi Statement'     s:fg s:b3
 exe 'hi Conditional'   s:fg s:b3
 exe 'hi Repeat'        s:fg s:b3
 exe 'hi Label'         s:fg s:b3 s:bold
-exe 'hi Keyword'       s:fg s:n2
+exe 'hi Keyword'       s:fg s:b2
 exe 'hi Exception'     s:fg s:y3
 exe 'hi Comment'       s:fg s:g2
 exe 'hi SpecialComment' s:fg s:g2 s:italic
