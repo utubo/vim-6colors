@@ -3,7 +3,6 @@ const styleSheet = document.styleSheets[0];
 const source = document.getElementById('source');
 const cbBackground = document.getElementById('cb_background');
 const btnCterm = document.getElementById('btn_cterm');
-const cbAutoLinkColor = document.getElementById('cb_auto_link_color');
 const cbN0 = document.getElementById('cb_n0');
 const cbN4 = document.getElementById('cb_n4');
 const ciThumb = document.getElementById('ci_xx');
@@ -29,7 +28,7 @@ const init = () => {
   const hiMap = {};
   const afterLink = [];
   let isGui = true;
-  for (let line of DEFAULT.split('\n')) {
+  for (const line of DEFAULT.split('\n')) {
     const span = document.createElement('SPAN');
     let hiName;
     let className = 'line';
@@ -88,7 +87,7 @@ const init = () => {
       subItem.appendChild(autoLink);
     }
     span.className = className;
-    let lineText = document.createElement('SPAN');
+    const lineText = document.createElement('SPAN');
     lineText.className = 'line-text';
     lineText.textContent = line + '\n';
     span.appendChild(lineText);
@@ -100,7 +99,7 @@ const init = () => {
     }
     fragment.appendChild(span);
   }
-  for (let after of afterLink) {
+  for (const after of afterLink) {
     after.span.className = hiMap[after.link] || 'line';
   }
   source.replaceChild(fragment, source.firstChild);
@@ -132,7 +131,7 @@ const applyColors = async (opt = {}) => {
     getValue = (c, v) => colorsGui[lightColors[c]];
   }
   // Add css rules
-  for (let [c, value] of Object.entries(colorsGui)) {
+  for (const [c, value] of Object.entries(colorsGui)) {
     let v = getValue(c, value);
     styleSheet.insertRule(`.fg-${c} { color: ${v}; }`);
     styleSheet.insertRule(`.bg-${c} { background: ${v}; }`);
@@ -143,7 +142,7 @@ const applyColors = async (opt = {}) => {
     lineText.textContent = lineText.textContent.replace(quoteReg, `'${value}'`);
     span.getElementsByClassName('gui-color-thumb')[0].style.background = value;
   }
-  for (let [c, value] of Object.entries(colorsCterm)) {
+  for (const [c, value] of Object.entries(colorsCterm)) {
     const span = document.getElementById(`cterm_${c}`);
     if (!span) continue;
     let lineText = span.getElementsByClassName('line-text')[0];
@@ -161,7 +160,7 @@ const applyColors = async (opt = {}) => {
 // - Color buttons -
 // -----------------
 const refreshColorInputs = () => {
-  for (let c of ['n0', 'n4', 'b4', 'g4', 'y4', 'r4']) {
+  for (const c of ['n0', 'n4', 'b4', 'g4', 'y4', 'r4']) {
     const value = colorsGui[c];
     const ci = document.getElementById('ci_' + c);
     if (ci && ci.value !== value) {
@@ -178,7 +177,7 @@ const applyOneColor = (colorName, value) => {
     for (let i = 0; i < 5; i++) {
       let rgb = '#';
       const opacity = opacities[i];
-      for (let j of ['r', 'g', 'b']) {
+      for (const j of ['r', 'g', 'b']) {
         let mergeValue = 0;
         mergeValue += n0RGB[j] * (1 - opacity);
         mergeValue += c4RGB[j] * opacity;
@@ -200,7 +199,7 @@ const applyOneColor = (colorName, value) => {
       colorsGui[c + '9'] = colorsGui[c + '4'];
     }
   }
-  for (let i of [0, 1, 2, 3, 4, 9]) {
+  for (const i of [0, 1, 2, 3, 4, 9]) {
     const key = c + i;
     if (colorsGui[key]) {
       colorsCterm[key] = findTermColor(colorsGui[key]).index;
@@ -346,7 +345,7 @@ cbBackground.addEventListener('click', applyColors);
 
 // Cterm
 btnCterm.classList.add('disabled');
-btnCterm.addEventListener('click', e => {
+btnCterm.addEventListener('click', () => {
   previewCterm = !previewCterm;
   if (previewCterm) {
     btnCterm.classList.remove('disabled');
@@ -401,7 +400,7 @@ document.getElementById('file_pic').addEventListener('input', async e => {
   pixels.sort((a, b) => a.h - b.h);
   // grouping by rounded hues.
   const rounded = {};
-  for (let p of pixels) {
+  for (const p of pixels) {
     const rh = Math.round(p.h / 4);
     rounded[rh] = rounded[rh] || [];
     rounded[rh].push(p);
@@ -425,7 +424,7 @@ const applyTextInfo = () => {
   lineTexts[0].textContent = `" * ${colorSchemeName || 'the color scheme name here'} *\n`;
   lineTexts[1].textContent = `" Author: ${author || '***'}\n`;
 };
-document.getElementById('btn_name').addEventListener('click', e=> {
+document.getElementById('btn_name').addEventListener('click', () => {
   const i = prompt('Input the color scheme name.', colorSchemeName);
   if (i === null) return;
   colorSchemeName = i || '';
@@ -433,7 +432,7 @@ document.getElementById('btn_name').addEventListener('click', e=> {
 });
 
 // Author
-document.getElementById('btn_author').addEventListener('click', e=> {
+document.getElementById('btn_author').addEventListener('click', () => {
   const i = prompt('Input your name. (Author)', author);
   if (i === null) return;
   author = i || '';
@@ -441,7 +440,7 @@ document.getElementById('btn_author').addEventListener('click', e=> {
 });
 
 // Download
-document.getElementById('btn_download').addEventListener('click', e=> {
+document.getElementById('btn_download').addEventListener('click', () => {
   const lnDownload = document.getElementById('ln_download');
   lnDownload.download = `${colorSchemeName || 'mycolor'}.vim`;
   lnDownload.href = 'data:text/plain;charset=utf8,' + encodeURIComponent(source.textContent);
@@ -452,17 +451,17 @@ document.getElementById('btn_download').addEventListener('click', e=> {
 const MAX_LENGTH = 2000;
 const createLink = () => {
   const kv = [];
-  for (let [key, value] of Object.entries(colorsGui)) {
+  for (const [key, value] of Object.entries(colorsGui)) {
     kv.push(`${key}-${value.slice(1)}`);
   }
-  for (let [key, value] of Object.entries(colorsCterm)) {
+  for (const [key, value] of Object.entries(colorsCterm)) {
     kv.push(`${key}-${value}`);
   }
   return CCCompress(kv.join('_'), MAX_LENGTH);
 };
 const loadFromQuery = (q) => {
   q = CCDecompress(q, MAX_LENGTH);
-  for (let kv of q.split('_')) {
+  for (const kv of q.split('_')) {
     const [key, value] = kv.split('-');
     if (value.length <= 3) {
       colorsCterm[key] = value | 0;
@@ -515,13 +514,6 @@ const onInputSliderLazy = () => {
   const h = Number(sliderH.value);
   const s = (sliderS.value) / 100;
   const l = (sliderL.value) / 100;
-  const contrast = value => {
-    if (value < 128) {
-      return middle(0, value - c, 127);
-    } else{
-      return middle(128, value + c, 255);
-    }
-  };
   const getNewValue = value => {
       const hsl = hexToHSL(value);
       hsl.h += h;
@@ -530,17 +522,17 @@ const onInputSliderLazy = () => {
       hsl.l = middle(Number(0), Number(1), hsl.l + l);
       return hslToHex(hsl);
   };
-  for (let [key, value] of Object.entries(beforeColorsGui)) {
+  for (const [key, value] of Object.entries(beforeColorsGui)) {
     colorsGui[key] = getNewValue(value);
   }
-  for (let [key, value] of Object.entries(beforeColorsCterm)) {
+  for (const [key, value] of Object.entries(beforeColorsCterm)) {
     colorsCterm[key] = findTermColor(getNewValue(termColors[value].hex)).index;
   }
   refreshColorInputs();
   applyColors();
 };
 let onInputSliderTimer;
-hslSliderModal.addEventListener('input', e => {
+hslSliderModal.addEventListener('input', () => {
   clearTimeout(onInputSliderTimer);
   onInputSliderTimer = setTimeout(onInputSliderLazy, 50);
 });
