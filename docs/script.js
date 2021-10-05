@@ -140,14 +140,14 @@ const applyColors = async (opt = {}) => {
     styleSheet.insertRule(`.sp-${x} { border-color: ${v}; }`);
     const span = document.getElementById(`gui_${x}`);
     if (!span) continue;
-    let lineText = span.getElementsByClassName('line-text')[0];
+    const lineText = span.getElementsByClassName('line-text')[0];
     lineText.textContent = lineText.textContent.replace(quoteReg, `'${value}'`);
     span.getElementsByClassName('gui-color-thumb')[0].style.background = value;
   }
   for (const [x, value] of Object.entries(colorsCterm)) {
     const span = document.getElementById(`cterm_${x}`);
     if (!span) continue;
-    let lineText = span.getElementsByClassName('line-text')[0];
+    const lineText = span.getElementsByClassName('line-text')[0];
     lineText.textContent = lineText.textContent.replace(quoteReg, `'${value}'`);
     span.getElementsByClassName('cterm-color-thumb')[0].style.background = termColors[value].hex;
   }
@@ -291,12 +291,12 @@ const createCtermDlg = () => {
   if (ctermDlg) return;
   const f = document.createDocumentFragment();
   let x = 0;
-  for (const x of termColors) {
+  for (const color of termColors) {
     const tile = document.createElement('DIV');
-    tile.id = 'cterm_dlg_tile_' + x.index;
+    tile.id = 'cterm_dlg_tile_' + color.index;
     tile.className = 'cterm-dlg-tile';
-    tile.title = x.index;
-    tile.style.background = x.hex;
+    tile.title = color.index;
+    tile.style.background = color.hex;
     f.appendChild(tile);
     if (++x === 16) {
       f.appendChild(document.createElement('BR'));
