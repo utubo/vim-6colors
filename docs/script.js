@@ -11,8 +11,8 @@ let ctermDlg;
 let previewCterm = false;
 let colorSchemeName = '';
 let author = '';
-const colorsGui = {};
-const colorsCterm = {};
+let colorsGui = {};
+let colorsCterm = {};
 
 const middle = (a, b, c) => [a, b, c].sort()[1];
 const deepCopy = o => JSON.parse(JSON.stringify(o));
@@ -114,6 +114,8 @@ const lightColors = {
   g1: 'g3', g2: 'g2', g3: 'g1', g4: 'g9',
   y1: 'y3', y2: 'y2', y3: 'y1', y4: 'y9',
   r1: 'r3', r2: 'r2', r3: 'r1', r4: 'r9',
+  c2: 'c4', c4: 'c2',
+  m2: 'm4', m4: 'm2',
 };
 const applyColors = async (opt = {}) => {
   // Clear CSS
@@ -121,29 +123,29 @@ const applyColors = async (opt = {}) => {
     styleSheet.deleteRule(i);
   }
   // for the Preview mode
-  let getValue = (c, v) => v; // default
+  let getValue = (x, v) => v; // default
   if (previewCterm) {
-    getValue = (c, v) => {
-      const t = termColors[colorsCterm[cbBackground.checked ? lightColors[c] : c]];
+    getValue = (x, v) => {
+      const t = termColors[colorsCterm[cbBackground.checked ? lightColors[x] : x]];
       return t ? t.hex : v;
     };
   } else if (cbBackground.checked) {
-    getValue = (c, v) => colorsGui[lightColors[c]];
+    getValue = (x, v) => colorsGui[lightColors[x]];
   }
   // Add css rules
-  for (const [c, value] of Object.entries(colorsGui)) {
-    let v = getValue(c, value);
-    styleSheet.insertRule(`.fg-${c} { color: ${v}; }`);
-    styleSheet.insertRule(`.bg-${c} { background: ${v}; }`);
-    styleSheet.insertRule(`.sp-${c} { border-color: ${v}; }`);
-    const span = document.getElementById(`gui_${c}`);
+  for (const [x, value] of Object.entries(colorsGui)) {
+    let v = getValue(x, value);
+    styleSheet.insertRule(`.fg-${x} { color: ${v}; }`);
+    styleSheet.insertRule(`.bg-${x} { background: ${v}; }`);
+    styleSheet.insertRule(`.sp-${x} { border-color: ${v}; }`);
+    const span = document.getElementById(`gui_${x}`);
     if (!span) continue;
     let lineText = span.getElementsByClassName('line-text')[0];
     lineText.textContent = lineText.textContent.replace(quoteReg, `'${value}'`);
     span.getElementsByClassName('gui-color-thumb')[0].style.background = value;
   }
-  for (const [c, value] of Object.entries(colorsCterm)) {
-    const span = document.getElementById(`cterm_${c}`);
+  for (const [x, value] of Object.entries(colorsCterm)) {
+    const span = document.getElementById(`cterm_${x}`);
     if (!span) continue;
     let lineText = span.getElementsByClassName('line-text')[0];
     lineText.textContent = lineText.textContent.replace(quoteReg, `'${value}'`);
@@ -160,18 +162,36 @@ const applyColors = async (opt = {}) => {
 // - Color buttons -
 // -----------------
 const refreshColorInputs = () => {
-  for (const c of ['n0', 'n4', 'b4', 'g4', 'y4', 'r4']) {
-    const value = colorsGui[c];
-    const ci = document.getElementById('ci_' + c);
+  for (const x of ['n0', 'n4', 'b4', 'g4', 'y4', 'r4']) {
+    const value = colorsGui[x];
+    const ci = document.getElementById('ci_' + x);
     if (ci && ci.value !== value) {
       ci.value = value;
     }
   }
 };
+const mergeHexs = (h1, h2) => {
+  const rgb1 = hexToRGB(h1);
+  const rgb2 = hexToRGB(h2);
+  const rgbM = {
+    r: Math.floor((rgb1.r + rgb2.r) / 2),
+    g: Math.floor((rgb1.g + rgb2.g) / 2),
+    b: Math.floor((rgb1.b + rgb2.b) / 2),
+  };
+  return rgbToHex(rgbM);
+};
+const makeMagenta = () => {
+  colorsGui.m2 = mergeHexs(colorsGui.b2, colorsGui.r2);
+  colorsGui.m4 = mergeHexs(colorsGui.b4, colorsGui.r4);
+};
+const makeCyan = () => {
+  colorsGui.c2 = mergeHexs(colorsGui.b2, colorsGui.g2);
+  colorsGui.c4 = mergeHexs(colorsGui.b4, colorsGui.g4);
+};
 const applyOneColor = (colorName, value) => {
-  const c = colorName[0];
+  const x = colorName[0];
   if (colorName[1] === '4') {
-    const c4RGB = hexToRGB(value);
+    const x4RGB = hexToRGB(value);
     const n0RGB = hexToRGB(colorsGui.n0);
     const opacities = [0, 0.2, 0.6, 0.8, 1];
     for (let i = 0; i < 5; i++) {
@@ -180,27 +200,33 @@ const applyOneColor = (colorName, value) => {
       for (const j of ['r', 'g', 'b']) {
         let mergeValue = 0;
         mergeValue += n0RGB[j] * (1 - opacity);
-        mergeValue += c4RGB[j] * opacity;
+        mergeValue += x4RGB[j] * opacity;
         mergeValue = Math.floor(mergeValue);
         mergeValue = Math.min(mergeValue, 255);
         rgb += ('0' + mergeValue.toString(16)).slice(-2);
       }
-      colorsGui[c + i] = rgb;
+      colorsGui[x + i] = rgb;
     }
   }
-  if (c !== 'n') {
-    // make c9
-    const hsl = hexToHSL(colorsGui[c + '3']);
+  if (x !== 'n') {
+    // make x9
+    const hsl = hexToHSL(colorsGui[x + '3']);
     if (hsl.h < 180) {
       hsl.s = Math.min(hsl.s * 1.25, 1);
       hsl.l *= 1.0 - Math.sin(hsl.h / 180 * Math.PI) / 2.0;
-      colorsGui[c + '9'] = hslToHex(hsl);
+      colorsGui[x + '9'] = hslToHex(hsl);
     } else {
-      colorsGui[c + '9'] = colorsGui[c + '4'];
+      colorsGui[x + '9'] = colorsGui[x + '4'];
     }
   }
+  if (x === 'b' || x === 'r') {
+    makeMagenta();
+  }
+  if (x === 'b' || x === 'g') {
+    makeCyan();
+  }
   for (const i of [0, 1, 2, 3, 4, 9]) {
-    const key = c + i;
+    const key = x + i;
     if (colorsGui[key]) {
       colorsCterm[key] = findTermColor(colorsGui[key]).index;
     }
@@ -261,12 +287,12 @@ const createCtermDlg = () => {
   if (ctermDlg) return;
   const f = document.createDocumentFragment();
   let x = 0;
-  for (const c of termColors) {
+  for (const x of termColors) {
     const tile = document.createElement('DIV');
-    tile.id = 'cterm_dlg_tile_' + c.index;
+    tile.id = 'cterm_dlg_tile_' + x.index;
     tile.className = 'cterm-dlg-tile';
-    tile.title = c.index;
-    tile.style.background = c.hex;
+    tile.title = x.index;
+    tile.style.background = x.hex;
     f.appendChild(tile);
     if (++x === 16) {
       f.appendChild(document.createElement('BR'));
@@ -391,11 +417,11 @@ document.getElementById('file_pic').addEventListener('input', async e => {
   // Remove too bright and too dark.
   const minL = (brightest.l - darkest.l) * 2 / 5 + darkest.l;
   const maxL = (brightest.l - darkest.l) * 4 / 5 + darkest.l;
-  pixels = pixels.filter(c => (minL < c.l && c.l < maxL));
+  pixels = pixels.filter(x => (minL < x.l && x.l < maxL));
   // Remove gray.
   pixels.sort((a, b) => b.s - a.s);
   const minS = pixels[0].s / 4;
-  pixels = pixels.filter(c => minS < c.s);
+  pixels = pixels.filter(x => minS < x.s);
   // Sort by hue.(0=red, 90=yellow, 180=green, 270=blue)
   pixels.sort((a, b) => a.h - b.h);
   // grouping by rounded hues.
@@ -460,6 +486,8 @@ const createLink = () => {
   return CCCompress(kv.join('_'), MAX_LENGTH);
 };
 const loadFromQuery = (q) => {
+  colorsGui = {};
+  colorsCterm = {};
   q = CCDecompress(q, MAX_LENGTH);
   for (const kv of q.split('_')) {
     const [key, value] = kv.split('-');
@@ -468,6 +496,12 @@ const loadFromQuery = (q) => {
     } else if (value.length === 6) {
       colorsGui[key] = '#' + value;
     }
+  }
+  if (!colorsGui.m2) {
+    makeMagenta();
+  }
+  if (!colorsGui.c2) {
+    makeCyan();
   }
   refreshColorInputs();
   applyColors({ keepUrl: 1 });

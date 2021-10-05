@@ -18,6 +18,8 @@ let g:colors_name = s:colors_name
 "   g: positiv2(green)
 "   y: warn(yellow)
 "   r: error(red)
+"   c: cyan(for terminal)
+"   m: magenta(for terminal)
 " opacity:
 "   0: 0% Default BG (only n0)
 "   1: 20% BG
@@ -32,26 +34,30 @@ if has('gui_running')
   let s:n2 = '#88a8aa'
   let s:n3 = '#ccdddd'
   let s:n4 = '#ffffff'
-  let s:b1 = '#2a3f51'
-  let s:b2 = '#376992'
-  let s:b3 = '#4492d3'
+  let s:b1 = '#33495f'
+  let s:b2 = '#407baf'
+  let s:b3 = '#4694d7'
   let s:b4 = '#4daeff'
   let s:b9 = '#4daeff'
-  let s:g1 = '#2c4f47'
-  let s:g2 = '#3b9179'
-  let s:g3 = '#4ad3aa'
+  let s:g1 = '#355954'
+  let s:g2 = '#45ac90'
+  let s:g3 = '#4dd5ae'
   let s:g4 = '#55ffcc'
-  let s:g9 = '#55ffcc'
-  let s:y1 = '#4e432a'
-  let s:y2 = '#907232' " not used
-  let s:y3 = '#d2a039'
+  let s:g9 = '#1cdba4'
+  let s:y1 = '#574c38'
+  let s:y2 = '#ab863b' " not used
+  let s:y3 = '#d5a33c'
   let s:y4 = '#ffc03e'
-  let s:y9 = '#ffc03e'
-  let s:r1 = '#4e2e36'
-  let s:r2 = '#903e50' " not used
-  let s:r3 = '#d24e69'
+  let s:y9 = '#a67611'
+  let s:r1 = '#573844'
+  let s:r2 = '#ab485f'
+  let s:r3 = '#d5506c'
   let s:r4 = '#ff597a'
   let s:r9 = '#ff597a'
+  let s:c2 = '#42939f'
+  let s:c4 = '#51d6e5'
+  let s:m2 = '#756187'
+  let s:m4 = '#a683bc'
 else
   set t_Co=256
   let s:term = 'cterm'
@@ -60,7 +66,7 @@ else
   let s:n2 = '109'
   let s:n3 = '152'
   let s:n4 = '15'
-  let s:b1 = '238'
+  let s:b1 = '239'
   let s:b2 = '67'
   let s:b3 = '74'
   let s:b4 = '75'
@@ -69,17 +75,21 @@ else
   let s:g2 = '72'
   let s:g3 = '79'
   let s:g4 = '86'
-  let s:g9 = '86'
-  let s:y1 = '237'
+  let s:g9 = '49'
+  let s:y1 = '239'
   let s:y2 = '137' " not used
   let s:y3 = '179'
   let s:y4 = '221'
-  let s:y9 = '221'
-  let s:r1 = '238'
+  let s:y9 = '136'
+  let s:r1 = '239'
   let s:r2 = '131' " not used
   let s:r3 = '168'
   let s:r4 = '204'
   let s:r9 = '204'
+  let s:c2 = '221'
+  let s:c4 = '221'
+  let s:m2 = '222'
+  let s:m4 = '222'
 endif
 
 if &background == 'light'
@@ -221,6 +231,14 @@ exe 'hi SpellBad'      s:fg s:r3 s:bg s:r1 s:sp s:r4 s:undercurl
 exe 'hi SpellCap'      s:fg s:y3 s:bg s:n0 s:sp s:y4 s:undercurl
 exe 'hi SpellLocal'    s:fg s:g3 s:bg s:n0 s:sp s:g4 s:undercurl
 exe 'hi SpellRare'     s:fg s:b3 s:bg s:n0 s:sp s:b4 s:undercurl
+
+" ---------------------
+" - Terminal -
+" ---------------------
+let g:terminal_ansi_colors = [
+\\ s:n0, s:r2, s:g2, s:y2, s:b2, s:m2, s:c2, s:n3,
+\\ s:n0, s:r4, s:g4, s:y4, s:b4, s:m4, s:c4, s:n4
+\\ ]
 
 " ---------------------
 " - Specific settings -
