@@ -24,7 +24,7 @@ If you don't want, let `g:terminal_ansi_colors`.
 " Example
 augroup terminal_ansi_color
 au!
-au ColorScheme * let let g:terminal_ansi_colors = [
+au ColorScheme * let g:terminal_ansi_colors = [
 \ '#2d3037', " black
 \ '#ab485f', " red
 \ '#45ac90', " green
