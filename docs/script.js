@@ -183,10 +183,14 @@ const mergeHexs = (h1, h2) => {
 const makeMagenta = () => {
   colorsGui.m2 = mergeHexs(colorsGui.b2, colorsGui.r2);
   colorsGui.m4 = mergeHexs(colorsGui.b4, colorsGui.r4);
+  colorsCterm.m2 = findTermColor(colorsGui.m2).index;
+  colorsCterm.m4 = findTermColor(colorsGui.m4).index;
 };
 const makeCyan = () => {
   colorsGui.c2 = mergeHexs(colorsGui.b2, colorsGui.g2);
   colorsGui.c4 = mergeHexs(colorsGui.b4, colorsGui.g4);
+  colorsCterm.c2 = findTermColor(colorsGui.c2).index;
+  colorsCterm.c4 = findTermColor(colorsGui.c4).index;
 };
 const applyOneColor = (colorName, value) => {
   const x = colorName[0];

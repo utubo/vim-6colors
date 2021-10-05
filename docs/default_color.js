@@ -86,10 +86,10 @@ else
   let s:r3 = '168'
   let s:r4 = '204'
   let s:r9 = '204'
-  let s:c2 = '221'
-  let s:c4 = '221'
-  let s:m2 = '222'
-  let s:m4 = '222'
+  let s:c2 = '73'
+  let s:c4 = '80'
+  let s:m2 = '96'
+  let s:m4 = '139'
 endif
 
 if &background == 'light'
