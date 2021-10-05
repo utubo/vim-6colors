@@ -25,7 +25,7 @@ If you don't want, let `g:terminal_ansi_colors`.
 augroup terminal_ansi_color
 au!
 au ColorScheme * let g:terminal_ansi_colors = [
-\ '#2d3037', " black
+\ '#2d3037', " black ⚠ Delete comments when you use this.
 \ '#ab485f', " red
 \ '#45ac90', " green
 \ '#ab863b', " yellow
