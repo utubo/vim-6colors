@@ -579,6 +579,19 @@ document.getElementById('btn_okhsl').addEventListener('click', okHSLSlider);
 document.getElementById('btn_resethsl').addEventListener('click', resetHSLSlider);
 
 // ----------------
+// - Key events   -
+// ----------------
+addEventListener('keydown', e => {
+  if (e.ctrlKey && e.key === 'a') {
+    e.preventDefault();
+    const range = document.createRange();
+    range.selectNode(source);
+    getSelection().removeAllRanges();
+    getSelection().addRange(range);
+  }
+});
+
+// ----------------
 // - START HERE ! -
 // ----------------
 init();

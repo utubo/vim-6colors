@@ -123,7 +123,7 @@ exe 'hi CursorLineNR'  s:fg s:n4 s:bg s:n2 s:none
 " -----------------
 " - Number column -
 " -----------------
-exe 'hi CursorColumn'  s:bg s:n1
+exe 'hi CursorColumn'  s:bg s:b1
 exe 'hi FoldColumn'    s:bg s:n1
 exe 'hi SignColumn'    s:fg s:g4 s:bg s:n1
 exe 'hi Folded'        s:fg s:n2 s:bg s:n0
