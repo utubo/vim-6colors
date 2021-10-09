@@ -103,7 +103,7 @@ endif
 let s:fg     = s:term.'fg='
 let s:bg     = s:term.'bg='
 let s:sp     = s:term ==# 'gui' ? 'guisp=' : 'ctermul='
-let s:style  = s:term.'='
+let s:style  = has('gui_running') ? 'gui=' : 'cterm='
 let s:none   = s:style.'NONE'
 let s:bold   = s:style.'bold'
 let s:italic = s:style.'italic'
