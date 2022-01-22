@@ -268,21 +268,12 @@ else
   let g:rcsv_colorpairs = [[s:b4, 'Gray'], [s:g4, 'Gray'], [s:y4, 'Gray'], [s:r4, 'Gray']]
 endif
 
-function s:CustomSyntax()
-  if g:colors_name != s:colors_name
-    exe 'augroup CustomSyntax_' . s:colors_name . '|au!|augroup END'
-    return
-  endif
-  " GitGutter
-  exe 'hi GitGutterAdd' s:fg s:g3 s:bg s:n1
-  exe 'hi GitGutterChange' s:fg s:y3 s:bg s:n1
-  exe 'hi GitGutterDelete' s:fg s:r3 s:bg s:n1
-  hi! link diffAdded DiffAdd
-  hi! link diffChanged DiffChange
-  hi! link diffRemoved DiffDelete
-endfunction
-
-exe 'augroup CustomSyntax_' . s:colors_name . '|au!|au ColorScheme,Syntax * call <SID>CustomSyntax()|augroup END'
-call s:CustomSyntax()
+" GitGutter
+exe 'hi GitGutterAdd' s:fg s:g3 s:bg s:n1
+exe 'hi GitGutterChange' s:fg s:y3 s:bg s:n1
+exe 'hi GitGutterDelete' s:fg s:r3 s:bg s:n1
+hi! link diffAdded DiffAdd
+hi! link diffChanged DiffChange
+hi! link diffRemoved DiffDelete
 `;
 
