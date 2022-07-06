@@ -33,7 +33,7 @@ if has('gui_running') || &termguicolors
   let s:n1 = '#505354'
   let s:n2 = '#88a8aa'
   let s:n3 = '#ccdddd'
-  let s:n4 = '#ffffff'
+  let s:n4 = '#efefef'
   let s:b1 = '#33495f'
   let s:b2 = '#407baf'
   let s:b3 = '#4694d7'
