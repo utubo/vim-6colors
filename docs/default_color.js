@@ -1,4 +1,4 @@
-const DEFAULT=`" * the color scheme name here *
+const DEFAULT=`" * *
 " Author: ***
 " Notes:
 " Thx: This is based on https://github.com/ggalindezb/vim_colorscheme_template

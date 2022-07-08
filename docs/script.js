@@ -8,6 +8,8 @@ const cbN4 = document.getElementById('cb_n4');
 const ciThumb = document.getElementById('ci_xx');
 let ctermDlg;
 
+let baseSrcUrl = '';
+let baseSrc = ''
 let previewCterm = false;
 let colorSchemeName = '';
 let author = '';
@@ -17,7 +19,7 @@ let colorsCterm = {};
 const middle = (a, b, c) => [a, b, c].sort()[1];
 const deepCopy = o => JSON.parse(JSON.stringify(o));
 
-const init = () => {
+const init = async () => {
   const fragment = document.createDocumentFragment();
   const letColorReg = /let s:([a-z]\d) = '([^']+)'/;
   const fgReg = /s:fg s:([a-z]\d)/;
@@ -28,7 +30,21 @@ const init = () => {
   const hiMap = {};
   const afterLink = [];
   let isGui = true;
-  for (const line of DEFAULT.split('\n')) {
+
+  baseSrc = DEFAULT;
+  if (baseSrcUrl && confirm(`Load from\n${baseSrcUrl}`)) {
+    baseSrc = await (await fetch(baseSrcUrl)).text();
+  }
+
+  const lines = baseSrc.split('\n');
+  if (lines[0] && lines[0].match(/" \* (.+) \*/)) {
+    colorSchemeName = decodeURI(RegExp.$1).slice(0, 255);
+  }
+  if (lines[1] && lines[1].match(/" Author: (.+)/)) {
+    author = decodeURI(RegExp.$1).slice(0, 255);
+  }
+
+  for (const line of lines) {
     const span = document.createElement('SPAN');
     let hiName;
     let className = 'line';
@@ -103,6 +119,7 @@ const init = () => {
     after.span.className = hiMap[after.link] || 'line';
   }
   source.replaceChild(fragment, source.firstChild);
+  baseSrc = source.textContent;
   refreshColorInputs();
 };
 
@@ -369,6 +386,15 @@ addEventListener('click', e=> {
 // ----------------
 // - Tool buttons -
 // ----------------
+// Base source code
+document.getElementById('btn_base_src').addEventListener('click', async e=> {
+  const input = prompt('Load from URL (e.g. https://.../mycolor.vim) or Reset', baseSrcUrl);
+  if (input !== null) {
+    baseSrcUrl = input;
+    location.search = `?b=${encodeURI(baseSrcUrl)}`;
+  }
+});
+
 // Background
 cbBackground.checked = false;
 cbBackground.addEventListener('click', applyColors);
@@ -511,12 +537,19 @@ const loadFromQuery = (q) => {
   applyColors({ keepUrl: 1 });
 };
 document.getElementById('btn_permalink').addEventListener('click', e => {
+  if (source.textContent === baseSrc) {
+    e.target.href = `?b=${encodeURI(baseSrcUrl)}`;
+    return;
+  }
   let href = '?c=' + createLink();
   if (colorSchemeName) {
     href += `&n=${encodeURI(colorSchemeName)}`;
   }
   if (author) {
     href += `&a=${encodeURI(author)}`;
+  }
+  if (baseSrcUrl) {
+    href += `&b=${encodeURI(baseSrcUrl)}`;
   }
   e.target.href = href;
 });
@@ -594,17 +627,23 @@ addEventListener('keydown', e => {
 // ----------------
 // - START HERE ! -
 // ----------------
-init();
-if (location.search.match(/n=([^&]+)/)) {
-  colorSchemeName = decodeURI(RegExp.$1).slice(0, 255);
-}
-if (location.search.match(/a=([^&]+)/)) {
-  author = decodeURI(RegExp.$1).slice(0, 255);
-}
-applyTextInfo();
-if (location.search.match(/c=([^&]+)/)) {
-  loadFromQuery(RegExp.$1);
-} else {
-  applyColors();
-}
+const start = async () => {
+  if (location.search.match(/b=([^&]+)/)) {
+    baseSrcUrl = decodeURI(RegExp.$1).slice(0, 512);
+  }
+  await init();
+  if (location.search.match(/n=([^&]+)/)) {
+    colorSchemeName = decodeURI(RegExp.$1).slice(0, 255);
+  }
+  if (location.search.match(/a=([^&]+)/)) {
+    author = decodeURI(RegExp.$1).slice(0, 255);
+  }
+  applyTextInfo();
+  if (location.search.match(/c=([^&]+)/)) {
+    loadFromQuery(RegExp.$1);
+  } else {
+    applyColors({ keepUrl: true });
+  }
+};
+start();
 
