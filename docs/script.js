@@ -397,7 +397,7 @@ document.getElementById('btn_base_src').addEventListener('click', async e=> {
 
 // Background
 cbBackground.checked = false;
-cbBackground.addEventListener('click', applyColors);
+cbBackground.addEventListener('click', () => { applyColors({ keepUrl: true }); });
 
 // Cterm
 btnCterm.classList.add('disabled');
@@ -408,7 +408,7 @@ btnCterm.addEventListener('click', () => {
   } else{
     btnCterm.classList.add('disabled');
   }
-  applyColors();
+  applyColors({ keepUrl: true });
 });
 
 // Sampling
