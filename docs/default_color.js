@@ -82,7 +82,7 @@ else
   let s:y4 = '221'
   let s:y9 = '136'
   let s:r1 = '239'
-  let s:r2 = '131' " not used
+  let s:r2 = '131'
   let s:r3 = '168'
   let s:r4 = '204'
   let s:r9 = '204'
