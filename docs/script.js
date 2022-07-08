@@ -9,7 +9,7 @@ const ciThumb = document.getElementById('ci_xx');
 let ctermDlg;
 
 let baseSrcUrl = '';
-let baseSrc = ''
+let baseSrc = '';
 let previewCterm = false;
 let colorSchemeName = '';
 let author = '';
