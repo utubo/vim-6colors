@@ -1,5 +1,7 @@
 .source {
   border-radius: .25rem;
+  max-width: 100%;
+  overflow: auto;
   padding: .5rem;
   position: relative;
   transition: .5s;
