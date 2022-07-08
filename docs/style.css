@@ -82,6 +82,7 @@
 .header {
   background: #9999;
   border-radius: .25rem;
+  box-shadow: 0 0 .3rem #0009;
   margin: 0 1rem 1rem 1rem;
   padding: .5rem 1rem;
   position: sticky;
@@ -144,6 +145,7 @@
 .modal {
   background: #9999;
   border-radius: .25rem;
+  box-shadow: 0 0 .3rem #0009;
   cursor: default;
   text-align: center;
 }
