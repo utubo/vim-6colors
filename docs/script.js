@@ -214,7 +214,7 @@ const applyOneColor = (colorName, value) => {
   if (colorName[1] === '4') {
     const x4RGB = hexToRGB(value);
     const n0RGB = hexToRGB(colorsGui.n0);
-    const opacities = [0, 0.2, 0.6, 0.8, 1];
+    const opacities = [0, 0.2, 0.6, 0.9, 1];
     for (let i = 0; i < 5; i++) {
       let rgb = '#';
       const opacity = opacities[i];

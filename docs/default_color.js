@@ -211,10 +211,10 @@ exe 'hi PreProc' s:fg s:b3
 " --------
 " - Diff -
 " --------
-exe 'hi DiffAdd'       s:fg s:b1 s:bg s:b3
-exe 'hi DiffChange'    s:fg s:y1 s:bg s:y3
-exe 'hi DiffDelete'    s:fg s:r2 s:bg s:r3
-exe 'hi DiffText'      s:fg s:g1 s:bg s:g3 s:none
+exe 'hi DiffAdd'       s:fg s:b3 s:bg s:b1
+exe 'hi DiffDelete'    s:fg s:r2 s:bg s:r1
+exe 'hi DiffChange'    s:fg s:y3 s:bg s:y1
+exe 'hi DiffText'      s:fg s:n3 s:bg s:y2 s:none
 
 " -------------------
 " - Completion menu -
@@ -269,9 +269,9 @@ else
 endif
 
 " GitGutter
-exe 'hi GitGutterAdd' s:fg s:g3 s:bg s:n1
-exe 'hi GitGutterChange' s:fg s:y3 s:bg s:n1
-exe 'hi GitGutterDelete' s:fg s:r3 s:bg s:n1
+exe 'hi GitGutterAdd' s:fg s:b4 s:bg s:n1
+exe 'hi GitGutterChange' s:fg s:y4 s:bg s:n1
+exe 'hi GitGutterDelete' s:fg s:r4 s:bg s:n1
 hi! link diffAdded DiffAdd
 hi! link diffChanged DiffChange
 hi! link diffRemoved DiffDelete
