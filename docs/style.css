@@ -74,9 +74,12 @@
   margin: 1pt;
 }
 
+.before {
+  border-color: #fff9;
+}
+
 .selected {
   border-color: #fff;
-
 }
 
 .header {
