@@ -341,9 +341,12 @@ const onClickCtermColorThumb = target => {
   // Update selected.
   const selected = ctermDlg.getElementsByClassName('selected')[0];
   selected && selected.classList.remove('selected');
+  const before = ctermDlg.getElementsByClassName('before')[0];
+  before && before.classList.remove('before');
   const index = colorsCterm[dataTarget];
   const targetTile = document.getElementById('cterm_dlg_tile_' + index);
   targetTile && targetTile.classList.add('selected');
+  targetTile && targetTile.classList.add('before');
   // Show
   const rect = target.getBoundingClientRect();
   ctermDlg.style.left = (rect.right + scrollX) + 'px';
@@ -353,6 +356,11 @@ const onClickCtermColorThumb = target => {
 };
 
 const onClickCtermDlgTile = target => {
+  // Update selected mark
+  const selected = ctermDlg.getElementsByClassName('selected')[0];
+  selected && selected.classList.remove('selected');
+  target.classList.add('selected');
+  // Apply color
   const key = ctermDlg.getAttribute('data-target');
   colorsCterm[key] = target.title;
   if (isAutoLinkColor()) {
