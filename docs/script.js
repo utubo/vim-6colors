@@ -544,9 +544,15 @@ const loadFromQuery = (q) => {
   refreshColorInputs();
   applyColors({ keepUrl: 1 });
 };
+const addViewSettings = href => {
+  if (cbBackground.checked) {
+    href += `&t=l`;
+  }
+  return href;
+};
 document.getElementById('btn_permalink').addEventListener('click', e => {
   if (source.textContent === baseSrc) {
-    e.target.href = `?b=${encodeURI(baseSrcUrl)}`;
+    e.target.href = addViewSettings(`?b=${encodeURI(baseSrcUrl)}`);
     return;
   }
   let href = '?c=' + createLink();
@@ -559,7 +565,7 @@ document.getElementById('btn_permalink').addEventListener('click', e => {
   if (baseSrcUrl) {
     href += `&b=${encodeURI(baseSrcUrl)}`;
   }
-  e.target.href = href;
+  e.target.href = addViewSettings(href);
 });
 
 // HSL sliders
@@ -647,6 +653,9 @@ const start = async () => {
     author = decodeURI(RegExp.$1).slice(0, 255);
   }
   applyTextInfo();
+  if (location.search.match(/t=l/)) {
+    cbBackground.checked = true;
+  }
   if (location.search.match(/c=([^&]+)/)) {
     loadFromQuery(RegExp.$1);
   } else {
