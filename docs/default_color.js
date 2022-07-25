@@ -263,10 +263,11 @@ let g:rainbow_conf[s:term.'fgs'] = [s:b4, s:g4, s:y4, s:r4]
 
 " rainbow-csv
 if s:term ==# 'gui'
-  let g:rcsv_colorpairs = [['7', s:b4], ['7', s:g4], ['7', s:y4], ['7', s:r4]]
+  let g:rcsv_colorpairs = [['7', s:b4], ['7', s:g4], ['7', s:y4], ['7', s:r4], ['7', s:m4]]
 else
-  let g:rcsv_colorpairs = [[s:b4, 'Gray'], [s:g4, 'Gray'], [s:y4, 'Gray'], [s:r4, 'Gray']]
+  let g:rcsv_colorpairs = [[s:b4, 'Gray'], [s:g4, 'Gray'], [s:y4, 'Gray'], [s:r4, 'Gray'], [s:m4, 'Gray']]
 endif
+call extend(g:rcsv_colorpairs, g:rcsv_colorpairs)
 
 " GitGutter
 exe 'hi GitGutterAdd' s:fg s:b4 s:bg s:n1
