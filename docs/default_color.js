@@ -149,10 +149,10 @@ hi! link IncSearch Cursor
 " -----------------
 exe 'hi StatusLine'    s:fg s:n2 s:bg s:n1
 exe 'hi StatusLineNC'  s:fg s:n3 s:bg s:n2
-exe 'hi Question'      s:fg s:y4 s:bg s:n0 s:none
-exe 'hi Title'         s:fg s:b3 s:bg s:n0 s:bold
-exe 'hi ModeMsg'       s:fg s:n3 s:bg s:n0 s:none
-exe 'hi MoreMsg'       s:fg s:n2 s:bg s:n0 s:none
+exe 'hi Question'      s:fg s:y4 s:none
+exe 'hi Title'         s:fg s:b3 s:bold
+exe 'hi ModeMsg'       s:fg s:n3 s:none
+exe 'hi MoreMsg'       s:fg s:n2 s:none
 hi! link WildMenu Visual
 
 " --------------
@@ -228,9 +228,9 @@ exe 'hi PmenuThumb'    s:bg s:b3
 " - Spelling -
 " ------------
 exe 'hi SpellBad'      s:fg s:r3 s:bg s:r1 s:sp s:r4 s:undercurl
-exe 'hi SpellCap'      s:fg s:y3 s:bg s:n0 s:sp s:y4 s:undercurl
-exe 'hi SpellLocal'    s:fg s:g3 s:bg s:n0 s:sp s:g4 s:undercurl
-exe 'hi SpellRare'     s:fg s:b3 s:bg s:n0 s:sp s:b4 s:undercurl
+exe 'hi SpellCap'      s:fg s:y3 s:sp s:y4 s:undercurl
+exe 'hi SpellLocal'    s:fg s:g3 s:sp s:g4 s:undercurl
+exe 'hi SpellRare'     s:fg s:b3 s:sp s:b4 s:undercurl
 
 " ---------------------
 " - Terminal -
