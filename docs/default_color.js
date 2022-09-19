@@ -148,8 +148,8 @@ hi! link IncSearch Cursor
 " -----------------
 " - Prompt/Status -
 " -----------------
-exe 'hi StatusLine'    s:fg s:n3 s:bg s:n1 s:reverse
-exe 'hi StatusLineNC'  s:fg s:n2 s:bg s:n1 s:reverse
+exe 'hi StatusLine'    s:fg s:n1 s:bg s:n4 s:reverse
+exe 'hi StatusLineNC'  s:fg s:n1 s:bg s:n2 s:reverse
 exe 'hi Question'      s:fg s:y4 s:none
 exe 'hi Title'         s:fg s:b3 s:bold
 exe 'hi ModeMsg'       s:fg s:n3 s:none
