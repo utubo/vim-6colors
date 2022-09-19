@@ -131,7 +131,7 @@ exe 'hi Folded'        s:fg s:n2 s:bg s:n0
 " -------------------------
 " - Window/Tab delimiters -
 " -------------------------
-exe 'hi VertSplit'     s:fg s:n3 s:bg s:n3
+exe 'hi VertSplit'     s:fg s:n1 s:bg s:n1
 exe 'hi ColorColumn'   s:fg s:n2 s:bg s:n1
 exe 'hi TabLine'       s:fg s:n3 s:bg s:n1 s:none
 exe 'hi TabLineFill'   s:fg s:n1 s:bg s:n1 s:none
@@ -147,8 +147,8 @@ hi! link IncSearch Cursor
 " -----------------
 " - Prompt/Status -
 " -----------------
-exe 'hi StatusLine'    s:fg s:n2 s:bg s:n1
-exe 'hi StatusLineNC'  s:fg s:n3 s:bg s:n2
+exe 'hi StatusLine'    s:fg s:n3 s:bg s:n1
+exe 'hi StatusLineNC'  s:fg s:n2 s:bg s:n1
 exe 'hi Question'      s:fg s:y4 s:none
 exe 'hi Title'         s:fg s:b3 s:bold
 exe 'hi ModeMsg'       s:fg s:n3 s:none
@@ -160,7 +160,7 @@ hi! link WildMenu Visual
 " --------------
 exe 'hi MatchParen'    s:fg s:b4 s:bg s:n1
 exe 'hi Visual'        s:fg s:n4 s:bg s:b2 s:none
-exe 'hi VisualNOS'     s:fg s:n3 s:bg s:n1 s:none
+exe 'hi VisualNOS'     s:fg s:n3 s:bg s:b2 s:none
 exe 'hi NonText'       s:fg s:n2 s:none
 
 exe 'hi Todo'          s:fg s:b4 s:bg 'NONE' s:bold
