@@ -119,7 +119,7 @@ exe 'hi Cursor'        s:fg s:n4 s:bg s:b4
 exe 'hi CursorIM'      s:fg s:n4 s:bg s:y4
 exe 'hi CursorLine'    s:bg 'NONE' s:underline
 exe 'hi LineNr'        s:fg s:n2 s:bg s:n1
-exe 'hi CursorLineNR'  s:fg s:n4 s:bg s:n2 s:none
+exe 'hi CursorLineNR'  s:fg s:n4 s:bg s:n1 s:none
 
 " -----------------
 " - Number column -
