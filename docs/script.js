@@ -52,10 +52,18 @@ const init = async () => {
     if (hiReg.test(line)) {
       hiName = RegExp.$1;
       if (fgReg.test(line)) {
-        className += ` fg-${RegExp.$1}`;
+        if (line.includes('s:reverse')) {
+          className += ` bg-${RegExp.$1}`;
+        } else {
+          className += ` fg-${RegExp.$1}`;
+        }
       }
       if (bgReg.test(line)) {
-        className += ` bg-${RegExp.$1}`;
+        if (line.includes('s:reverse')) {
+          className += ` fg-${RegExp.$1}`;
+        } else {
+          className += ` bg-${RegExp.$1}`;
+        }
       }
       if (spReg.test(line)) {
         className += ` sp-${RegExp.$1}`;
