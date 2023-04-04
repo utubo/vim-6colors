@@ -236,6 +236,7 @@ exe 'hi SpellRare'     s:fg s:b3 s:bg s:n0 s:sp s:b4 s:undercurl
 " ---------------------
 " - Terminal -
 " ---------------------
+hi! link Terminal Normal
 if s:term ==# 'gui'
   let g:terminal_ansi_colors = [
   \\ s:n0, s:r2, s:g2, s:y2, s:b2, s:m2, s:c2, s:n3,
