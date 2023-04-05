@@ -240,7 +240,7 @@ hi! link Terminal Normal
 if s:term ==# 'gui'
   let g:terminal_ansi_colors = [
   \\ s:n0, s:r2, s:g2, s:y2, s:b2, s:m2, s:c2, s:n3,
-  \\ s:n0, s:r4, s:g4, s:y4, s:b4, s:m4, s:c4, s:n4
+  \\ s:n2, s:r4, s:g4, s:y4, s:b4, s:m4, s:c4, s:n4
   \\ ]
 endif
 
