@@ -167,8 +167,8 @@ exe 'hi NonText'       s:fg s:n2 s:none
 exe 'hi Todo'          s:fg s:b4 s:bg 'NONE' s:bold
 exe 'hi Underlined'    s:fg s:b4
 exe 'hi Error'         s:fg s:r4 s:bg 'NONE' s:bold
-exe 'hi ErrorMsg'      s:fg s:r3 s:bg 'NONE' s:none
-exe 'hi WarningMsg'    s:fg s:y3
+exe 'hi ErrorMsg'      s:fg s:r4 s:bg 'NONE' s:none
+exe 'hi WarningMsg'    s:fg s:y4
 hi! link Ignore NonText
 hi! link SpecialKey NonText
 
