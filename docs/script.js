@@ -32,7 +32,10 @@ const init = async () => {
   let isGui = true;
 
   baseSrc = DEFAULT;
-  if (baseSrcUrl && confirm(`Load from\n${baseSrcUrl}`)) {
+  if (baseSrcUrl && (
+    baseSrcUrl.startsWith('https://raw.githubusercontent.com/') ||
+    confirm(`Load from\n${baseSrcUrl}`)
+  )) {
     baseSrc = await (await fetch(baseSrcUrl)).text();
   }
 
