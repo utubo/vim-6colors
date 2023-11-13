@@ -222,7 +222,7 @@ exe 'hi DiffText'      s:fg s:n3 s:bg s:y2 s:none
 " -------------------
 exe 'hi Pmenu'         s:fg s:n1 s:bg s:b3
 hi! link PmenuSel Cursor
-exe 'hi PmenuExtra'    s:fg s:n2 s:bg s:n1
+exe 'hi PmenuExtra'    s:fg s:n2 s:bg s:b3
 exe 'hi PmenuSbar'     s:bg s:b1
 exe 'hi PmenuThumb'    s:bg s:b3
 
