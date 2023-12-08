@@ -249,6 +249,7 @@ endif
 " - Specific settings -
 " ---------------------
 exe 'hi JavaScriptEmbed' s:fg s:g4 s:bg s:n1
+exe 'hi vimEscape' s:fg s:n2 s:bg s:n1
 
 " Easy motion
 exe 'hi EasyMotionShadeDefault' s:fg s:n2 s:bg s:n0
