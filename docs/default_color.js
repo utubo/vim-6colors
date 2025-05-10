@@ -181,7 +181,7 @@ exe 'hi Identifier '   s:fg s:n3
 exe 'hi Constant'      s:fg s:b2
 exe 'hi String'        s:fg s:b3 s:bg s:n1
 exe 'hi Character'     s:fg s:b2
-exe 'hi Number'        s:fg s:b2
+exe 'hi Number'        s:fg s:b2 s:bg 'NONE'
 hi! link Boolean Number
 hi! link Float Number
 
@@ -236,9 +236,9 @@ exe 'hi PmenuThumb'    s:bg s:n2
 " - Spelling -
 " ------------
 exe 'hi SpellBad'      s:fg s:r3 s:bg s:r1 s:sp s:r4 s:undercurl
-exe 'hi SpellCap'      s:fg s:y3 s:bg s:n0 s:sp s:y4 s:undercurl
-exe 'hi SpellLocal'    s:fg s:g3 s:bg s:n0 s:sp s:g4 s:undercurl
-exe 'hi SpellRare'     s:fg s:b3 s:bg s:n0 s:sp s:b4 s:undercurl
+exe 'hi SpellCap'      s:fg s:y3 s:bg 'NONE' s:sp s:y4 s:undercurl
+exe 'hi SpellLocal'    s:fg s:g3 s:bg 'NONE' s:sp s:g4 s:undercurl
+exe 'hi SpellRare'     s:fg s:b3 s:bg 'NONE' s:sp s:b4 s:undercurl
 
 " ---------------------
 " - Terminal -
